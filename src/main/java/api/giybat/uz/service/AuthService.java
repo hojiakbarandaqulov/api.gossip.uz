@@ -38,6 +38,6 @@ public class AuthService {
             entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 
         }
-        return ApiResponse.ok();
+        return ApiResponse.ok("Registration successful");
     }
 }

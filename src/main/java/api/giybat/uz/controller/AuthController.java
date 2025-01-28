@@ -1,5 +1,6 @@
 package api.giybat.uz.controller;
 
+import api.giybat.uz.dto.ApiResponse;
 import api.giybat.uz.dto.RegistrationDTO;
 import api.giybat.uz.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,8 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<String> registration(@RequestBody RegistrationDTO dto){
-        return ResponseEntity.ok(authService.registration(dto));
+    public ResponseEntity<ApiResponse<String>> registration(@RequestBody RegistrationDTO dto){
+       ApiResponse<String> ok = authService.registration(dto);
+        return ResponseEntity.ok(ok);
     }
 }

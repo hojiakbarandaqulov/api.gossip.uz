@@ -58,7 +58,7 @@ public class ApiResponse<T> {
         return new ApiResponse<T>(200, false);
     }
 
-    public static <T> ApiResponse<T> ok(Boolean isError, T data) {
+    public static <T> ApiResponse<T> ok( T data) {
         return new ApiResponse<T>(200, false, data);
     }
 
