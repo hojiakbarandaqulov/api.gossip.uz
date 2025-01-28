@@ -10,6 +10,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -36,6 +37,10 @@ public class AuthService {
             entity.setSurname(dto.getSurname());
             entity.setEmail(dto.getEmail());
             entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+            entity.setStatus(GeneralStatus.IN_REGISTRATION);
+            entity.setVisible(true);
+            entity.setCreatedDate(LocalDateTime.now());
+            profileRepository.save(entity);
 
         }
         return ApiResponse.ok("Registration successful");
