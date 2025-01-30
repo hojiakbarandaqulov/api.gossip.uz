@@ -16,10 +16,12 @@ import java.util.Optional;
 @Service
 public class AuthService {
     private final ProfileRepository profileRepository;
+    private final EmailSendingService emailSendingService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ProfileRoleService profileRoleService;
-    public AuthService(ProfileRepository profileRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRoleService profileRoleService) {
+    public AuthService(ProfileRepository profileRepository, EmailSendingService emailSendingService, BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRoleService profileRoleService) {
         this.profileRepository = profileRepository;
+        this.emailSendingService = emailSendingService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.profileRoleService = profileRoleService;
     }
@@ -44,8 +46,10 @@ public class AuthService {
         entity.setVisible(true);
         entity.setCreatedDate(LocalDateTime.now());
         profileRepository.save(entity);
+
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
+        emailSendingService.sendRegistrationEmail(dto.getEmail(),entity.getId());
         return ApiResponse.ok("Registration successful");
     }
 }
