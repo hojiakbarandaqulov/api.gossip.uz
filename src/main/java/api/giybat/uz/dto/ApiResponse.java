@@ -53,7 +53,6 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-
     public static <T> ApiResponse<T> ok() {
         return new ApiResponse<T>(200, false);
     }
@@ -61,7 +60,6 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> ok( T data) {
         return new ApiResponse<T>(200, false, data);
     }
-
 
     public static <T> ApiResponse<T> bad(String message) {
         return new ApiResponse<T>(message, 400, true);
@@ -74,6 +72,5 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> unAuthorized(String message) {
         return new ApiResponse<T>(message, 401, true);
     }
-
 
 }
