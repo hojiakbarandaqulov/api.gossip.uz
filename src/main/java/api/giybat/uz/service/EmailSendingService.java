@@ -20,7 +20,7 @@ public class EmailSendingService {
 
     public void sendRegistrationEmail(String email,Integer profileId){
         String subject = "Complete the Registration Email"+profileId;
-        String body = " Registration Email. Please lick to link"+profileId;
+        String body = " Registration Email. Please lick to link: http://localhost:8080/api/v1/registration/verification/"+profileId;
         sendEmail(email,subject,body);
 
     }

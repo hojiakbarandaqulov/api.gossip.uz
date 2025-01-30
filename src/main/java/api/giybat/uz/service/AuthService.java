@@ -17,11 +17,14 @@ import java.util.Optional;
 public class AuthService {
     private final ProfileRepository profileRepository;
     private final EmailSendingService emailSendingService;
+    private final ProfileService profileService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ProfileRoleService profileRoleService;
-    public AuthService(ProfileRepository profileRepository, EmailSendingService emailSendingService, BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRoleService profileRoleService) {
+
+    public AuthService(ProfileRepository profileRepository, EmailSendingService emailSendingService, ProfileService profileService, BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRoleService profileRoleService) {
         this.profileRepository = profileRepository;
         this.emailSendingService = emailSendingService;
+        this.profileService = profileService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.profileRoleService = profileRoleService;
     }
@@ -51,5 +54,14 @@ public class AuthService {
 
         emailSendingService.sendRegistrationEmail(dto.getEmail(),entity.getId());
         return ApiResponse.ok("Registration successful");
+    }
+
+    public ApiResponse<String> regVerification(Integer profileId) {
+        ProfileEntity profile = profileService.getById(profileId);
+        if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
+            profileRepository.changeStatus(profileId,GeneralStatus.ACTIVE);
+            return ApiResponse.ok("Registration successful");
+        }
+        throw new AppBadException("Verification failed");
     }
 }
