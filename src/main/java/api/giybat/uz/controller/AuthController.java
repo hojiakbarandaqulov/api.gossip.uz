@@ -29,5 +29,4 @@ public class AuthController {
         ApiResponse<String> ok = authService.regVerification(profileId);
         return ResponseEntity.ok(ok);
     }
-
 }
