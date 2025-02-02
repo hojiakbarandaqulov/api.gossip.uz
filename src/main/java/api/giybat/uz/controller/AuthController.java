@@ -1,6 +1,8 @@
 package api.giybat.uz.controller;
 
 import api.giybat.uz.dto.ApiResponse;
+import api.giybat.uz.dto.LoginDTO;
+import api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.dto.RegistrationDTO;
 import api.giybat.uz.service.AuthService;
 import jakarta.validation.Valid;
@@ -24,9 +26,15 @@ public class AuthController {
     }
 
 
-    @GetMapping("/registration/verification/{profileId}")
-    public ResponseEntity<ApiResponse<String>> registrationVerification(@PathVariable("profileId") Integer profileId){
-        ApiResponse<String> ok = authService.regVerification(profileId);
+    @GetMapping("/registration/verification/{token}")
+    public ResponseEntity<ApiResponse<String>> registrationVerification(@PathVariable("token") String token){
+        ApiResponse<String> ok = authService.regVerification(token);
+        return ResponseEntity.ok(ok);
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<ApiResponse<ProfileDTO>> login(@Valid @RequestBody LoginDTO dto){
+        ApiResponse<ProfileDTO> ok = authService.login(dto);
         return ResponseEntity.ok(ok);
     }
 }

@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /g'iybat.uz-talablar.txt
+/src/main/resources/application-local.properties

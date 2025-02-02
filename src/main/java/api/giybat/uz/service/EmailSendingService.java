@@ -1,5 +1,6 @@
 package api.giybat.uz.service;
 
+import api.giybat.uz.util.JwtUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,17 @@ public class EmailSendingService {
     @Value("${spring.mail.username}")
     private String fromAccount;
 
+    @Value("${server.domain}")
+    private String serverDomain;
+
     private final JavaMailSender mailSender;
 
     public EmailSendingService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 
-    public void sendRegistrationEmail(String email,Integer profileId){
-        String subject = "Complete registration"+profileId;
+    public void sendRegistrationEmail(String email, Integer profileId) {
+        String subject = "Complete registration";
         String body = "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
                 "<head>\n" +
@@ -37,17 +41,21 @@ public class EmailSendingService {
                 "<body>\n" +
                 "\n" +
                 "<h1>Complete registration verification</h1>\n" +
-                "<p>Please click to button for completing registration: <a  style=\"padding: 10px 30px;\n" +
+                "<p>Please click to button for completing registration: <a style=\"padding: 10px 30px;\n" +
                 "display: inline-block;\n" +
                 "text-decoration: none;\n" +
                 "collapse: white;\n" +
-                "background-color:  indianred;\" href=\"http://localhost:8080/api/v1/registration/verification/%d\" target=\"_blank\"> Click there</a></p>\n" +
+                "background-color:  indianred;\" href=\"%s/api/v1/registration/verification/%s\"\n" +
+                "target=\"_blank\"> Click\n" +
+                "    there</a></p>\n" +
                 "</body>\n" +
                 "</html>";
-        body=String.format(body,profileId);
-        sendMimeEmail(email,subject,body);
+        body = String.format(body,serverDomain, JwtUtil.encode(profileId));
+        System.out.println(JwtUtil.encode(profileId));
+        sendMimeEmail(email, subject, body);
 
     }
+
     private void sendMimeEmail(String email, String subject, String body) {
         try {
             MimeMessage msg = mailSender.createMimeMessage();

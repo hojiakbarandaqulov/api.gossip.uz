@@ -22,4 +22,9 @@ public class JwtDTO {
     public JwtDTO(String id) {
         this.id = id;
     }
+
+    public JwtDTO(String username, String role) {
+        this.username = username;
+        this.role = ProfileRole.valueOf(role);
+    }
 }

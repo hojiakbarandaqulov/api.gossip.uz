@@ -1,12 +1,16 @@
 package api.giybat.uz.service;
 
 import api.giybat.uz.dto.ApiResponse;
+import api.giybat.uz.dto.LoginDTO;
+import api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.dto.RegistrationDTO;
 import api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.enums.GeneralStatus;
 import api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.repository.ProfileRepository;
+import api.giybat.uz.util.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,15 +56,19 @@ public class AuthService {
 
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
-        emailSendingService.sendRegistrationEmail(dto.getEmail(),entity.getId());
+        emailSendingService.sendRegistrationEmail(dto.getEmail(), entity.getId());
         return ApiResponse.ok("Registration successful");
     }
 
-    public ApiResponse<String> regVerification(Integer profileId) {
-        ProfileEntity profile = profileService.getById(profileId);
-        if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
-            profileRepository.changeStatus(profileId,GeneralStatus.ACTIVE);
-            return ApiResponse.ok("Registration successful");
+    public ApiResponse<String> regVerification(String token) {
+        try {
+            Integer profileId = JwtUtil.decode(token);
+            ProfileEntity profile = profileService.getById(profileId);
+            if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
+                profileRepository.changeStatus(profileId, GeneralStatus.ACTIVE);
+                return ApiResponse.ok("Registration successful");
+            }
+        } catch (JwtException e) {
         }
         throw new AppBadException("Verification failed");
     }

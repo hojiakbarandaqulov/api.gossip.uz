@@ -1,16 +1,19 @@
 package api.giybat.uz.util;
 
 import api.giybat.uz.dto.JwtDTO;
-import api.giybat.uz.enums.ProfileRole;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
-import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.SecretKey;
+import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 public class JwtUtil {
     private static final int tokenLiveTime = 1000 * 3600 * 96; // 2-day
-    private static final String secretKey = "very_long_mazgiskjdh2skjdhadasdasg7fgdfgdfdftrhdgrgefergetdgsfegvergdgsbdzsfbvgdsetbgrFLKWRMF.KJERNGVSFUOISN;IUVNSDBFIUSH;IULFHWA;UOIESIU;OF;IOEJ'OIGJMKLDFMGghjgjOTFIJBP";
-
+    private static final String secretKey = "verylongmazgiskjdhskjdhadasdasgfgdfgdfdftrhdgrgefergetdgsfegvergdgsbdzsfbvgdsetbgrFLKWRMFKJERNGVSFUOISNIUVNSDBFIUSHIULFHWAUOIESIUOFIOEJOIGJMKLDFMGghjgjOTFIJBP";
+/*
     public static String encode(String profileId, String username, ProfileRole role) {
         JwtBuilder jwtBuilder = Jwts.builder();
         jwtBuilder.issuedAt(new Date());
@@ -26,9 +29,28 @@ public class JwtUtil {
         jwtBuilder.expiration(new Date(System.currentTimeMillis() + (tokenLiveTime)));
         jwtBuilder.issuer("Interview_questions");
         return jwtBuilder.compact();
-    }
+    }*/
 
-    public static JwtDTO decode(String token){
+
+    public static String encode(Integer profileId) {
+        return Jwts
+                .builder()
+                .setSubject(String.valueOf(profileId))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + (60*60*10)))
+                .signWith(getSignInKey1(),SignatureAlgorithm.HS512)
+                .compact();
+    }
+    public static Integer decode(String token) {
+        Claims claims = Jwts
+                .parser()
+                .verifyWith(getSignInKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return Integer.valueOf(claims.getSubject());
+    }
+   /* public static JwtDTO decode(String token){
         SignatureAlgorithm sa = SignatureAlgorithm.HS512;
         SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), sa.getJcaName());
         JwtParser jwtParser = Jwts.parser()
@@ -46,10 +68,20 @@ public class JwtUtil {
             return new JwtDTO(id,username,profileRole);
         }
         return new JwtDTO(id);
+    }*/
+//    public static JwtDTO getJwtDTO(String authorization) {
+//        String[] str = authorization.split(" ");
+//        String jwt = str[1];
+//        return JwtUtil.decode(jwt);
+//    }
+
+    private static SecretKey getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
-    public static JwtDTO getJwtDTO(String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        return JwtUtil.decode(jwt);
+
+    private static Key getSignInKey1() {
+        byte[] keyBytes = Base64.getUrlDecoder().decode(secretKey);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }
