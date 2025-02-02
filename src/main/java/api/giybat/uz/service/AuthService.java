@@ -72,4 +72,20 @@ public class AuthService {
         }
         throw new AppBadException("Verification failed");
     }
+
+    public ApiResponse<ProfileDTO> login(LoginDTO loginDTO){
+        Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(loginDTO.getEmail());
+        if (optional.isEmpty()){
+            throw new AppBadException("Username email or password is wrong");
+        }
+        ProfileEntity profile = optional.get();
+        if (bCryptPasswordEncoder.matches(loginDTO.getPassword(), profile.getPassword())){
+            throw new AppBadException("Wrong password");
+        }
+        if (!profile.getStatus().equals(GeneralStatus.ACTIVE)){
+            throw new AppBadException("Wrong status");
+        }
+    return null;
+    }
+
 }
