@@ -1,5 +1,6 @@
 package api.giybat.uz.service;
 
+import api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.util.JwtUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -9,6 +10,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EmailSendingService {
@@ -25,7 +28,7 @@ public class EmailSendingService {
         this.mailSender = mailSender;
     }
 
-    public void sendRegistrationEmail(String email, Integer profileId) {
+    public void sendRegistrationEmail(String email, Integer profileId,List<ProfileRole> roles) {
         String subject = "Complete registration";
         String body = "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -50,8 +53,8 @@ public class EmailSendingService {
                 "    there</a></p>\n" +
                 "</body>\n" +
                 "</html>";
-        body = String.format(body,serverDomain, JwtUtil.encode(profileId));
-        System.out.println(JwtUtil.encode(profileId));
+        body = String.format(body,serverDomain, JwtUtil.encode(profileId, roles ));
+//        System.out.println(JwtUtil.encode(profileId));
         sendMimeEmail(email, subject, body);
 
     }

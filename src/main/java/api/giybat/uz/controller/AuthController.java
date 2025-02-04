@@ -37,8 +37,6 @@ public class AuthController {
         ApiResponse<ProfileDTO> ok = authService.login(dto);
         return ResponseEntity.ok(ok);
     }
-
-
 }
 
 
