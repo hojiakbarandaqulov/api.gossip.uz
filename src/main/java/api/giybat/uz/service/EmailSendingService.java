@@ -48,7 +48,7 @@ public class EmailSendingService {
                 "display: inline-block;\n" +
                 "text-decoration: none;\n" +
                 "collapse: white;\n" +
-                "background-color:  indianred;\" href=\"%s/api/v1/registration/verification/%s\"\n" +
+                "background-color:  indianred;\" href=\"%s/api/v1/auth/registration/verification/%s\"\n" +
                 "target=\"_blank\"> Click\n" +
                 "    there</a></p>\n" +
                 "</body>\n" +

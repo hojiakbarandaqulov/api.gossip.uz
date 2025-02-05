@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     private final AuthService authService;
@@ -24,7 +24,6 @@ public class AuthController {
        ApiResponse<String> ok = authService.registration(dto);
         return ResponseEntity.ok(ok);
     }
-
 
     @GetMapping("/registration/verification/{token}")
     public ResponseEntity<ApiResponse<String>> registrationVerification(@PathVariable("token") String token){

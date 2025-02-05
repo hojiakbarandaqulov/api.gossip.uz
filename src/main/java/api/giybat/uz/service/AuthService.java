@@ -36,7 +36,7 @@ public class AuthService {
     }
 
     public ApiResponse<String> registration(RegistrationDTO dto) {
-        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getEmail());
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         if (optional.isPresent()) {
             ProfileEntity profileEntity = optional.get();
             if (profileEntity.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
@@ -49,7 +49,7 @@ public class AuthService {
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
-        entity.setUsername(dto.getEmail());
+        entity.setUsername(dto.getUsername());
         entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         entity.setStatus(GeneralStatus.IN_REGISTRATION);
         entity.setVisible(true);
@@ -58,7 +58,7 @@ public class AuthService {
 
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
-        emailSendingService.sendRegistrationEmail(dto.getEmail(), entity.getId(), Collections.singletonList(ProfileRole.ROLE_USER));
+        emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(), Collections.singletonList(ProfileRole.ROLE_USER));
         return ApiResponse.ok("Registration successful");
     }
 
@@ -76,7 +76,7 @@ public class AuthService {
     }
 
     public ApiResponse<ProfileDTO> login(LoginDTO loginDTO) {
-        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(loginDTO.getEmail());
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(loginDTO.getUsername());
         if (optional.isEmpty()) {
             throw new AppBadException("Username email or password is wrong");
         }

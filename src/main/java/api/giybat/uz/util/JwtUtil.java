@@ -9,30 +9,24 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
+import java.security.PublicKey;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class JwtUtil {
     private static final int tokenLiveTime = 1000 * 3600 * 96; // 2-day
     private static final String secretKey = "verylongmazgiskjdhskjdhadasdasgfgdfgdfdftrhdgrgefergetdgsfegvergdgsbdzsfbvgdsetbgrFLKWRMFKJERNGVSFUOISNIUVNSDBFIUSHIULFHWAUOIESIUOFIOEJOIGJMKLDFMGghjgjOTFIJBP";
-/*
-    public static String encode(String profileId, String username, ProfileRole role) {
-        JwtBuilder jwtBuilder = Jwts.builder();
-        jwtBuilder.issuedAt(new Date());
 
-        SignatureAlgorithm sa = SignatureAlgorithm.HS512;
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), sa.getJcaName());
 
-        jwtBuilder.signWith(secretKeySpec);
-        jwtBuilder.claim("id", profileId);
-        jwtBuilder.claim("role", role);
-        jwtBuilder.claim("username", username);
-
-        jwtBuilder.expiration(new Date(System.currentTimeMillis() + (tokenLiveTime)));
-        jwtBuilder.issuer("Interview_questions");
-        return jwtBuilder.compact();
-    }*/
-
+    public static String encode(Integer profileId) {
+        return Jwts
+                .builder()
+                .subject(String.valueOf(profileId))
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + (tokenLiveTime)))
+                .signWith(getSignInKey())
+                .compact();
+    }
 
     public static String encode(String username, Integer profileId, List<ProfileRole> roleList) {
         String strRoles = roleList.stream().map(Enum::name).
@@ -41,23 +35,24 @@ public class JwtUtil {
         Map<String, String> claims = new HashMap<>();
         claims.put("roles", strRoles);
         claims.put("id", String.valueOf(profileId));
+
         return Jwts
                 .builder()
-                .setSubject(username)
-                .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + (tokenLiveTime)))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS512)
+                .subject(username)
+                .claims(claims)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + (tokenLiveTime)))
+                .signWith(getSignInKey())
                 .compact();
     }
 
     public static JwtDTO decode(String token) {
         Claims claims = Jwts
                 .parser()
-                .setSigningKey(getSignInKey())
+                .verifyWith(getSignInKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
         String username = claims.getSubject();
         Integer id = Integer.valueOf((String) claims.get("id"));
         String strRoles = (String) claims.get("roles");
@@ -67,8 +62,10 @@ public class JwtUtil {
         return new JwtDTO(id, username, roleLis);
     }
 
-    private static Key getSignInKey() {
+    private static SecretKey getSignInKey() {
         byte[] keyBytes = Base64.getUrlDecoder().decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return  Keys.hmacShaKeyFor(keyBytes);
     }
 }
+
+
