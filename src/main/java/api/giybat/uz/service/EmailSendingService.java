@@ -53,7 +53,7 @@ public class EmailSendingService {
                 "    there</a></p>\n" +
                 "</body>\n" +
                 "</html>";
-        body = String.format(body,serverDomain, JwtUtil.encode(profileId, roles ));
+        body = String.format(body,serverDomain, JwtUtil.encode(email,profileId, roles ));
 //        System.out.println(JwtUtil.encode(profileId));
         sendMimeEmail(email, subject, body);
 

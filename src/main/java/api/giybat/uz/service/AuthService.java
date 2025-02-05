@@ -36,7 +36,7 @@ public class AuthService {
     }
 
     public ApiResponse<String> registration(RegistrationDTO dto) {
-        Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(dto.getEmail());
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getEmail());
         if (optional.isPresent()) {
             ProfileEntity profileEntity = optional.get();
             if (profileEntity.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
@@ -49,7 +49,7 @@ public class AuthService {
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
-        entity.setEmail(dto.getEmail());
+        entity.setUsername(dto.getEmail());
         entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         entity.setStatus(GeneralStatus.IN_REGISTRATION);
         entity.setVisible(true);
@@ -76,7 +76,7 @@ public class AuthService {
     }
 
     public ApiResponse<ProfileDTO> login(LoginDTO loginDTO) {
-        Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(loginDTO.getEmail());
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(loginDTO.getEmail());
         if (optional.isEmpty()) {
             throw new AppBadException("Username email or password is wrong");
         }
@@ -90,10 +90,10 @@ public class AuthService {
         ProfileDTO response = new ProfileDTO();
         response.setName(profile.getName());
         response.setSurname(profile.getSurname());
-        response.setEmail(profile.getEmail());
+        response.setEmail(profile.getUsername());
         response.setRole(profileRoleRepository.getAllRolesListByProfileId(profile.getId()));
-        response.setJwt(JwtUtil.encode(profile.getId(), response.getRole()));
+        response.setJwt(JwtUtil.encode(profile.
+                getUsername(), profile.getId(), response.getRole()));
         return ApiResponse.ok(response);
     }
-
 }

@@ -14,5 +14,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class JwtDTO {
     private Integer id;
+    private String username;
     private List<ProfileRole> roleList;
 }

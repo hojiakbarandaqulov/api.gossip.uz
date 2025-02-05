@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -19,14 +20,22 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SpringConfig {
 
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserDetailsService userDetailsService;
 
-    public SpringConfig(CustomUserDetailsService customUserDetailsService) {
+    public SpringConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CustomUserDetailsService customUserDetailsService) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.userDetailsService = customUserDetailsService;
     }
 
+
+    public static final String[] AUTH_WHITELIST = {
+            "/auth/**",
+            "/profile/authorization",
+    };
+
     @Bean
-    public AuthenticationProvider authenticationProvider(BCryptPasswordEncoder bCryptPasswordEncoder ) {
+    public AuthenticationProvider authenticationProvider(BCryptPasswordEncoder bCryptPasswordEncoder) {
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
@@ -37,10 +46,10 @@ public class SpringConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
-                    .requestMatchers("/api/v1/**").permitAll()
+                    .requestMatchers(AUTH_WHITELIST).permitAll()
                     .anyRequest()
                     .authenticated();
-        });
+        }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(httpSecurityCorsConfigurer -> {

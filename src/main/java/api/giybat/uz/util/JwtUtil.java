@@ -34,15 +34,16 @@ public class JwtUtil {
     }*/
 
 
-    public static String encode(Integer profileId, List<ProfileRole> roleList) {
+    public static String encode(String username, Integer profileId, List<ProfileRole> roleList) {
         String strRoles = roleList.stream().map(Enum::name).
                 collect(Collectors.joining(","));
 
         Map<String, String> claims = new HashMap<>();
         claims.put("roles", strRoles);
+        claims.put("id", String.valueOf(profileId));
         return Jwts
                 .builder()
-                .setSubject(String.valueOf(profileId))
+                .setSubject(username)
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + (tokenLiveTime)))
@@ -57,14 +58,14 @@ public class JwtUtil {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        Integer id = Integer.valueOf(claims.getSubject());
-        String strRoles = (String) claims.get("role");
+        String username = claims.getSubject();
+        Integer id = Integer.valueOf((String) claims.get("id"));
+        String strRoles = (String) claims.get("roles");
         List<ProfileRole> roleLis = Arrays.stream(strRoles.split(","))
                 .map(ProfileRole::valueOf)
                 .toList();
-        return  new JwtDTO(id, roleLis);
+        return new JwtDTO(id, username, roleLis);
     }
-
 
     private static Key getSignInKey() {
         byte[] keyBytes = Base64.getUrlDecoder().decode(secretKey);

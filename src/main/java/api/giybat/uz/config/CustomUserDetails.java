@@ -22,7 +22,7 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(ProfileEntity profile, List<ProfileRole> roleList) {
         this.id = profile.getId();
         this.name = profile.getName();
-        this.username = profile.getEmail();
+        this.username = profile.getUsername();
         this.password = profile.getPassword();
         this.status = profile.getStatus();
         this.authorities = roleList.stream().map(item -> new SimpleGrantedAuthority(item.name())).toList();
