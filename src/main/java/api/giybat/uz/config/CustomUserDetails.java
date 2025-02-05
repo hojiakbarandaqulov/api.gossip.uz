@@ -3,6 +3,8 @@ package api.giybat.uz.config;
 import api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.enums.GeneralStatus;
 import api.giybat.uz.enums.ProfileRole;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -61,5 +63,13 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
