@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class EmailSendingService {
@@ -28,7 +29,7 @@ public class EmailSendingService {
         this.mailSender = mailSender;
     }
 
-    public void sendRegistrationEmail(String email, Integer profileId,List<ProfileRole> roles) {
+    public void sendRegistrationEmail(String email, Integer profileId, List<ProfileRole> roles) {
         String subject = "Complete registration";
         String body = "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -53,7 +54,7 @@ public class EmailSendingService {
                 "    there</a></p>\n" +
                 "</body>\n" +
                 "</html>";
-        body = String.format(body,serverDomain, JwtUtil.encode(email,profileId, roles ));
+        body = String.format(body, serverDomain, JwtUtil.encode(email, profileId, roles));
 //        System.out.println(JwtUtil.encode(profileId));
         sendMimeEmail(email, subject, body);
 
@@ -67,7 +68,9 @@ public class EmailSendingService {
             helper.setTo(email);
             helper.setSubject(subject);
             helper.setText(body, true);
-            mailSender.send(msg);
+            CompletableFuture.runAsync(() -> {
+                mailSender.send(msg);
+            });
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }

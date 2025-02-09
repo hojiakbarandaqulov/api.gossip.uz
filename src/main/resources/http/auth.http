@@ -1,21 +1,21 @@
 ###
-POST http://localhost:8080/api/v1/registration
+POST http://localhost:8080/api/v1/auth/registration
 Content-Type: application/json
+Accept-Language: ru
 
 {
   "name": "Xojiakbar",
-  "surname": "Bek",
-  "email": "hojiakbarandaqulov5@gmail.com",
+  "username": "hojiakbarandaqulov@gmail.com",
   "password": "1234"
 }
 
 
 ### Registration Verification
-GET http://localhost:8080/api/v1/registration/verification/2
+GET http://localhost:8080/api/v1/auth/registration/verification/2
 
 
 ### Login
-GET http://localhost:8080/api/v1/login
+GET http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {

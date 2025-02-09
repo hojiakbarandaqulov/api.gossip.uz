@@ -18,9 +18,6 @@ public class ProfileEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "surname")
-    private String surname;
-
     @Column(name = "username")
     private String username; // email else phone
 

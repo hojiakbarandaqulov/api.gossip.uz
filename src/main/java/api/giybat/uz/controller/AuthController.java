@@ -4,13 +4,14 @@ import api.giybat.uz.dto.ApiResponse;
 import api.giybat.uz.dto.LoginDTO;
 import api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.dto.RegistrationDTO;
+import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     private final AuthService authService;
@@ -20,8 +21,9 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<ApiResponse<String>> registration(@Valid @RequestBody RegistrationDTO dto){
-       ApiResponse<String> ok = authService.registration(dto);
+    public ResponseEntity<ApiResponse<String>> registration(@Valid @RequestBody RegistrationDTO dto,
+                                                            @RequestHeader("Accept-Language")AppLanguage language){
+       ApiResponse<String> ok = authService.registration(dto, language);
         return ResponseEntity.ok(ok);
     }
 

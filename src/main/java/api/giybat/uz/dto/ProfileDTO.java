@@ -13,8 +13,7 @@ import java.util.List;
 public class ProfileDTO {
 
     private String name;
-    private String surname;
-    private String email;
+    private String username;
     private List<ProfileRole> role;
     private String jwt;
 }
