@@ -27,7 +27,6 @@ public class AuthController {
         return ResponseEntity.ok(ok);
     }
 
-
     @GetMapping("/registration/verification/{token}")
     public ResponseEntity<ApiResponse<String>> registrationVerification(@PathVariable("token") String token){
         ApiResponse<String> ok = authService.regVerification(token);
