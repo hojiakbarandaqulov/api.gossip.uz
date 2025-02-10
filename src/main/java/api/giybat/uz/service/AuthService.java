@@ -29,16 +29,15 @@ public class AuthService {
     private final ProfileRoleRepository profileRoleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ProfileRoleService profileRoleService;
-    private final ResourceBundleMessageSource messages;
-
-    public AuthService(ProfileRepository profileRepository, EmailSendingService emailSendingService, ProfileService profileService, ProfileRoleRepository profileRoleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRoleService profileRoleService, ResourceBundleMessageSource messages) {
+    private final ResourceBundleService messageService;
+    public AuthService(ProfileRepository profileRepository, EmailSendingService emailSendingService, ProfileService profileService, ProfileRoleRepository profileRoleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRoleService profileRoleService, ResourceBundleService messageService) {
         this.profileRepository = profileRepository;
         this.emailSendingService = emailSendingService;
         this.profileService = profileService;
         this.profileRoleRepository = profileRoleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.profileRoleService = profileRoleService;
-        this.messages = messages;
+        this.messageService = messageService;
     }
 
     public ApiResponse<String> registration(RegistrationDTO dto, AppLanguage language) {
@@ -49,7 +48,7 @@ public class AuthService {
                 profileRoleService.deleteRoles(profileEntity.getId());
                 profileRepository.delete(profileEntity);
             } else {
-                throw new AppBadException(messages.getMessage("email.phone.exists",null,new Locale(language.name())));
+                throw new AppBadException(messageService.getMessage("email.phone.exists",language));
             }
         }
         ProfileEntity entity = new ProfileEntity();
@@ -64,7 +63,7 @@ public class AuthService {
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
         emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(), Collections.singletonList(ProfileRole.ROLE_USER));
-        return ApiResponse.ok(messages.getMessage("email.confirm.send",null, new Locale(language.name())));
+        return ApiResponse.ok(messageService.getMessage("email.confirm.send",language));
     }
 
     public ApiResponse<String> regVerification(String token) {
@@ -73,7 +72,7 @@ public class AuthService {
             ProfileEntity profile = profileService.getById(profileId);
             if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
                 profileRepository.changeStatus(profileId, GeneralStatus.ACTIVE);
-                return ApiResponse.ok("Registration successful");
+                return ApiResponse.ok("registration.successful");
             }
         } catch (JwtException e) {
         }
