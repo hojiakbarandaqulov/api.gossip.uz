@@ -18,9 +18,10 @@ public class JwtUtil {
     private static final String secretKey = "verylongmazgiskjdhskjdhadasdasgfgdfgdfdftrhdgrgefergetdgsfegvergdgsbdzsfbvgdsetbgrFLKWRMFKJERNGVSFUOISNIUVNSDBFIUSHIULFHWAUOIESIUOFIOEJOIGJMKLDFMGghjgjOTFIJBP";
 
 
-    public static String encode(Integer profileId) {
+    public static String encode(String username,Integer profileId) {
         return Jwts
                 .builder()
+                .subject(username)
                 .subject(String.valueOf(profileId))
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + (tokenLiveTime)))
