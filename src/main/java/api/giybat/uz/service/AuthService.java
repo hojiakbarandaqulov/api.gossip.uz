@@ -38,7 +38,7 @@ public class AuthService {
         this.messagesService = messagesService;
     }
 
-    public ApiResponse<String> registration(RegistrationDTO dto, AppLanguage lang) {
+    public ApiResponse<String> registration(RegistrationDTO dto, AppLanguage language) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         if (optional.isPresent()) {
             ProfileEntity profileEntity = optional.get();
@@ -46,7 +46,7 @@ public class AuthService {
                 profileRoleService.deleteRoles(profileEntity.getId());
                 profileRepository.delete(profileEntity);
             } else {
-                throw new AppBadException(messagesService.getMessage("email.phone.exists",lang));
+                throw new AppBadException(messagesService.getMessage("email.phone.exists", language));
             }
         }
         ProfileEntity entity = new ProfileEntity();
@@ -60,8 +60,8 @@ public class AuthService {
 
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
-        emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(),lang);
-        return ApiResponse.ok(messagesService.getMessage("registration.successful",lang));
+        emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(), Collections.singletonList(ProfileRole.ROLE_USER));
+        return ApiResponse.ok(messagesService.getMessage("registration.successful", language));
     }
 
     public ApiResponse<String> regVerification(String token, AppLanguage language) {
@@ -74,20 +74,20 @@ public class AuthService {
             }
         } catch (JwtException e) {
         }
-        throw new AppBadException(messagesService.getMessage("verification.wrong",language));
+        throw new AppBadException(messagesService.getMessage("verification.wrong", language));
     }
 
     public ApiResponse<ProfileDTO> login(LoginDTO loginDTO, AppLanguage language) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(loginDTO.getUsername());
         if (optional.isEmpty()) {
-            throw new AppBadException(messagesService.getMessage("username.password.wrong",language));
+            throw new AppBadException(messagesService.getMessage("username.password.wrong", language));
         }
         ProfileEntity profile = optional.get();
         if (!bCryptPasswordEncoder.matches(loginDTO.getPassword(), profile.getPassword())) {
-            throw new AppBadException(messagesService.getMessage("wrong.password",language));
+            throw new AppBadException(messagesService.getMessage("wrong.password", language));
         }
         if (!profile.getStatus().equals(GeneralStatus.ACTIVE)) {
-            throw new AppBadException(messagesService.getMessage("wrong.status",language));
+            throw new AppBadException(messagesService.getMessage("wrong.status", language));
         }
         ProfileDTO response = new ProfileDTO();
         response.setName(profile.getName());
