@@ -31,6 +31,7 @@ public class SpringConfig {
 
     public static final String[] AUTH_WHITELIST = {
             "/api/v1/auth/**",
+            "/profile/authorization",
     };
 
     @Bean
@@ -46,6 +47,7 @@ public class SpringConfig {
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
                     .requestMatchers(AUTH_WHITELIST).permitAll()
+                    .requestMatchers("/api/v1/auth/**").permitAll()
                     .anyRequest()
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
