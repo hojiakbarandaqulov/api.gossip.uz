@@ -1,18 +1,15 @@
 package api.giybat.uz.service;
 
 import api.giybat.uz.enums.AppLanguage;
-import api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.util.JwtUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
