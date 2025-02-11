@@ -46,5 +46,4 @@ public class ExceptionHandleController extends ResponseEntityExceptionHandler {
         return ResponseEntity.internalServerError().body(e.getMessage());
     }
 
-
 }

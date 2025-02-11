@@ -1,5 +1,6 @@
 package api.giybat.uz.service;
 
+import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.util.JwtUtil;
 import jakarta.mail.MessagingException;
@@ -29,7 +30,7 @@ public class EmailSendingService {
         this.mailSender = mailSender;
     }
 
-    public void sendRegistrationEmail(String email, Integer profileId, List<ProfileRole> roles) {
+    public void sendRegistrationEmail(String email, Integer profileId, AppLanguage lang) {
         String subject = "Complete registration";
         String body = "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -49,12 +50,12 @@ public class EmailSendingService {
                 "display: inline-block;\n" +
                 "text-decoration: none;\n" +
                 "collapse: white;\n" +
-                "background-color:  indianred;\" href=\"%s/api/v1/registration/verification/%s\"\n" +
+                "background-color:  indianred;\" href=\"%s/api/v1/auth/registration/verification/%s?lang=%s\"\n" +
                 "target=\"_blank\"> Click\n" +
                 "    there</a></p>\n" +
                 "</body>\n" +
                 "</html>";
-        body = String.format(body, serverDomain, JwtUtil.encode(email, profileId, roles));
+        body = String.format(body, serverDomain, JwtUtil.encode(email, profileId),lang);
 //        System.out.println(JwtUtil.encode(profileId));
         sendMimeEmail(email, subject, body);
 

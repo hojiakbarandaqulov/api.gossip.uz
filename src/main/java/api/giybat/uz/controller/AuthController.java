@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-
     private final AuthService authService;
 
     public AuthController(AuthService authService) {
@@ -22,23 +21,26 @@ public class AuthController {
 
     @PostMapping("/registration")
     public ResponseEntity<ApiResponse<String>> registration(@Valid @RequestBody RegistrationDTO dto,
-                                                            @RequestHeader("Accept-Language")AppLanguage language){
+                                                            @RequestHeader(value = "Accept-Language", defaultValue = "UZ")AppLanguage language){
        ApiResponse<String> ok = authService.registration(dto, language);
         return ResponseEntity.ok(ok);
     }
 
-
     @GetMapping("/registration/verification/{token}")
-    public ResponseEntity<ApiResponse<String>> registrationVerification(@PathVariable("token") String token){
-        ApiResponse<String> ok = authService.regVerification(token);
+    public ResponseEntity<ApiResponse<String>> registrationVerification(@PathVariable("token") String token,
+                                                                        @RequestParam("lang") AppLanguage lang){
+        ApiResponse<String> ok = authService.regVerification(token, lang);
         return ResponseEntity.ok(ok);
     }
 
     @GetMapping("/login")
-    public ResponseEntity<ApiResponse<ProfileDTO>> login(@Valid @RequestBody LoginDTO dto){
-        ApiResponse<ProfileDTO> ok = authService.login(dto);
+    public ResponseEntity<ApiResponse<ProfileDTO>> login(@Valid @RequestBody LoginDTO dto,
+                                                         @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language){
+        ApiResponse<ProfileDTO> ok = authService.login(dto, language);
         return ResponseEntity.ok(ok);
     }
+
+
 }
 
 

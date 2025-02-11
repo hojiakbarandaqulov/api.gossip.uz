@@ -1,5 +1,6 @@
 package api.giybat.uz.service;
 
+import api.giybat.uz.Application;
 import api.giybat.uz.config.ResourceBundleConfig;
 import api.giybat.uz.dto.*;
 import api.giybat.uz.entity.ProfileEntity;
@@ -30,6 +31,7 @@ public class AuthService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ProfileRoleService profileRoleService;
     private final ResourceBundleService messageService;
+
     public AuthService(ProfileRepository profileRepository, EmailSendingService emailSendingService, ProfileService profileService, ProfileRoleRepository profileRoleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRoleService profileRoleService, ResourceBundleService messageService) {
         this.profileRepository = profileRepository;
         this.emailSendingService = emailSendingService;
@@ -48,7 +50,7 @@ public class AuthService {
                 profileRoleService.deleteRoles(profileEntity.getId());
                 profileRepository.delete(profileEntity);
             } else {
-                throw new AppBadException(messageService.getMessage("email.phone.exists",language));
+                throw new AppBadException(messageService.getMessage("email.phone.exists", language));
             }
         }
         ProfileEntity entity = new ProfileEntity();
@@ -62,41 +64,40 @@ public class AuthService {
 
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
-        emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(), Collections.singletonList(ProfileRole.ROLE_USER));
-        return ApiResponse.ok(messageService.getMessage("email.confirm.send",language));
+        emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(), language);
+        return ApiResponse.ok(messageService.getMessage("email.confirm.send", language));
     }
 
-    public ApiResponse<String> regVerification(String token) {
+    public ApiResponse<String> regVerification(String token, AppLanguage language) {
         try {
             Integer profileId = JwtUtil.decode(token).getId();
             ProfileEntity profile = profileService.getById(profileId);
             if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
                 profileRepository.changeStatus(profileId, GeneralStatus.ACTIVE);
-                return ApiResponse.ok("registration.successful");
+                return ApiResponse.ok(messageService.getMessage("registration.successful", language));
             }
         } catch (JwtException e) {
         }
-        throw new AppBadException("Verification failed");
+        throw new AppBadException(messageService.getMessage("verification.wrong", language));
     }
 
-    public ApiResponse<ProfileDTO> login(LoginDTO loginDTO) {
+    public ApiResponse<ProfileDTO> login(LoginDTO loginDTO, AppLanguage language) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(loginDTO.getUsername());
         if (optional.isEmpty()) {
-            throw new AppBadException("Username email or password is wrong");
+            throw new AppBadException(messageService.getMessage("username.password.wrong", language));
         }
         ProfileEntity profile = optional.get();
         if (!bCryptPasswordEncoder.matches(loginDTO.getPassword(), profile.getPassword())) {
-            throw new AppBadException("Wrong password");
+            throw new AppBadException(messageService.getMessage("wrong.password", language));
         }
         if (!profile.getStatus().equals(GeneralStatus.ACTIVE)) {
-            throw new AppBadException("Wrong status");
+            throw new AppBadException(messageService.getMessage("wrong.status", language));
         }
         ProfileDTO response = new ProfileDTO();
         response.setName(profile.getName());
         response.setUsername(profile.getUsername());
         response.setRole(profileRoleRepository.getAllRolesListByProfileId(profile.getId()));
-        response.setJwt(JwtUtil.encode(profile.
-                getUsername(), profile.getId(), response.getRole()));
+        response.setJwt(JwtUtil.encode(profile.getUsername(), profile.getId(), response.getRole()));
         return ApiResponse.ok(response);
     }
 }

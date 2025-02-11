@@ -16,4 +16,8 @@ public class JwtDTO {
     private Integer id;
     private String username;
     private List<ProfileRole> roleList;
+
+    public JwtDTO(Integer id) {
+        this.id = id;
+    }
 }
