@@ -60,7 +60,7 @@ public class AuthService {
 
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
-        emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId());
+        emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(),language);
         return ApiResponse.ok(messagesService.getMessage("registration.successful", language));
     }
 
