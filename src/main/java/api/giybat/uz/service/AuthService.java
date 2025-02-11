@@ -102,7 +102,7 @@ public class AuthService {
     }
 
     public ApiResponse<ProfileDTO> login(LoginDTO loginDTO){
-        Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(loginDTO.getEmail());
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(loginDTO.getUsername());
         if (optional.isEmpty()){
             throw new AppBadException("Username email or password is wrong");
         }
