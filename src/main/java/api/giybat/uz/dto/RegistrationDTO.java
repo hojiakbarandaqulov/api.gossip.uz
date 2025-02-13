@@ -14,8 +14,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class RegistrationDTO {
     @NotBlank(message = "name required")
     private String name;
-    @NotBlank(message = "surname required")
-    private String surname;
     @NotBlank(message = "username required")
     private String username;
     @NotBlank(message = "password required")
