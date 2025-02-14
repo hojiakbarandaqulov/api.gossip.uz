@@ -66,7 +66,7 @@ public class AuthService {
 
     public ApiResponse<String> regVerification(String token, AppLanguage language) {
         try {
-            Integer profileId = JwtUtil.decode(token).getId();
+            Integer profileId = JwtUtil.decodeVerRegToken(token);
             ProfileEntity profile = profileService.getById(profileId);
             if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
                 profileRepository.changeStatus(profileId, GeneralStatus.ACTIVE);

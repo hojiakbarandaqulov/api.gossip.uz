@@ -1,6 +1,7 @@
 package api.giybat.uz.service;
 
 import api.giybat.uz.enums.AppLanguage;
+import api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.util.JwtUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -10,6 +11,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -52,7 +54,7 @@ public class EmailSendingService {
                 "    there</a></p>\n" +
                 "</body>\n" +
                 "</html>";
-        body = String.format(body, serverDomain, JwtUtil.encode(email,profileId),lang);
+        body = String.format(body, serverDomain, JwtUtil.encode(profileId,email), lang);
 //        System.out.println(JwtUtil.encode(profileId));
         sendMimeEmail(email, subject, body);
 

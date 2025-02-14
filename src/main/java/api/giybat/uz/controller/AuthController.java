@@ -33,14 +33,12 @@ public class AuthController {
         return ResponseEntity.ok(ok);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<ApiResponse<ProfileDTO>> login(@Valid @RequestBody LoginDTO dto,
                                                          @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language){
         ApiResponse<ProfileDTO> ok = authService.login(dto, language);
         return ResponseEntity.ok(ok);
     }
-
-
 }
 
 

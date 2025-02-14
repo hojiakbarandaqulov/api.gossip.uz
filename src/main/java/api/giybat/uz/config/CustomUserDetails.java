@@ -12,7 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+@Getter
+@Setter
 public class CustomUserDetails implements UserDetails {
     private Integer id;
     private String name;
@@ -65,11 +66,4 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }
