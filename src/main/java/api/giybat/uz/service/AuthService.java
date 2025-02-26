@@ -1,6 +1,8 @@
 package api.giybat.uz.service;
 
 import api.giybat.uz.dto.*;
+import api.giybat.uz.dto.auth.RegistrationDTO;
+import api.giybat.uz.dto.auth.ResetPasswordDTO;
 import api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.enums.GeneralStatus;
@@ -14,8 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -96,5 +96,18 @@ public class AuthService {
         response.setJwt(JwtUtil.encode(profile.
                 getUsername(), profile.getId(), response.getRole()));
         return ApiResponse.ok(response);
+    }
+
+    public ApiResponse<String> resetPassword(ResetPasswordDTO dto, AppLanguage language) {
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
+        if (optional.isEmpty()) {
+            throw new AppBadException(messagesService.getMessage("username.password.wrong", language));
+        }
+        ProfileEntity profile = optional.get();
+        if (profile.getStatus().equals(GeneralStatus.ACTIVE)) {
+            throw new AppBadException(messagesService.getMessage("wrong.status", language));
+        }
+        emailSendingService.sentResetPasswordEmail(dto.getUsername());
+        return ApiResponse.ok("Reset password sent");
     }
 }

@@ -3,7 +3,8 @@ package api.giybat.uz.controller;
 import api.giybat.uz.dto.ApiResponse;
 import api.giybat.uz.dto.LoginDTO;
 import api.giybat.uz.dto.ProfileDTO;
-import api.giybat.uz.dto.RegistrationDTO;
+import api.giybat.uz.dto.auth.RegistrationDTO;
+import api.giybat.uz.dto.auth.ResetPasswordDTO;
 import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.service.AuthService;
 import jakarta.validation.Valid;
@@ -33,10 +34,17 @@ public class AuthController {
         return ResponseEntity.ok(ok);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/registration/login")
     public ResponseEntity<ApiResponse<ProfileDTO>> login(@Valid @RequestBody LoginDTO dto,
                                                          @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language){
         ApiResponse<ProfileDTO> ok = authService.login(dto, language);
+        return ResponseEntity.ok(ok);
+    }
+
+    @PostMapping("/registration/reset")
+    public ResponseEntity<ApiResponse<String>> resent(@Valid @RequestBody ResetPasswordDTO dto,
+                                                         @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language){
+        ApiResponse<String> ok = authService.resetPassword(dto, language);
         return ResponseEntity.ok(ok);
     }
 }

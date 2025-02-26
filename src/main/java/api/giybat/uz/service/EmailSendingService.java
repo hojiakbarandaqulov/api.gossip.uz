@@ -3,6 +3,7 @@ package api.giybat.uz.service;
 import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.util.JwtUtil;
+import api.giybat.uz.util.RandomUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,5 +85,12 @@ public class EmailSendingService {
         simpleMailMessage.setText(body);
         mailSender.send(simpleMailMessage);
 
+    }
+
+    public void sentResetPasswordEmail(String username) {
+        String subject = "Reset password send";
+        String randomCode = RandomUtil.getRandomCode();
+        String body = "reset password send code: "+randomCode;
+        sendMimeEmail(username, subject, body);
     }
 }
