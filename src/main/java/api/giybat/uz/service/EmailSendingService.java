@@ -56,9 +56,14 @@ public class EmailSendingService {
                 "</body>\n" +
                 "</html>";
         body = String.format(body, serverDomain, JwtUtil.encode(profileId,email), lang);
-//        System.out.println(JwtUtil.encode(profileId));
         sendMimeEmail(email, subject, body);
+    }
 
+    public void sentResetPasswordEmail(String username) {
+        String randomCode = RandomUtil.getRandomCode();
+        String subject = "Reset password Conformation";
+        String body = "How are you. This is confirm code reset password send code %s : "+randomCode;
+        sendMimeEmail(username, subject, body);
     }
 
     private void sendMimeEmail(String email, String subject, String body) {
@@ -85,12 +90,5 @@ public class EmailSendingService {
         simpleMailMessage.setText(body);
         mailSender.send(simpleMailMessage);
 
-    }
-
-    public void sentResetPasswordEmail(String username) {
-        String subject = "Reset password send";
-        String randomCode = RandomUtil.getRandomCode();
-        String body = "reset password send code: "+randomCode;
-        sendMimeEmail(username, subject, body);
     }
 }
