@@ -108,6 +108,6 @@ public class AuthService {
             throw new AppBadException(messagesService.getMessage("wrong.status", language));
         }
         emailSendingService.sentResetPasswordEmail(dto.getUsername());
-        return ApiResponse.ok("Reset password sent");
+        return ApiResponse.ok(messagesService.getMessage("reset.password.response", language));
     }
 }

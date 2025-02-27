@@ -1,0 +1,32 @@
+package api.giybat.uz.entity;
+
+import api.giybat.uz.enums.SmsType;
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+@Entity
+@Table(name = "email_history")
+public class EmailHistoryEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "code")
+    private String code;
+
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "email_type")
+    private SmsType smsType;
+    @Column(name = "attemp_count")
+    private Integer attemptCount;
+
+}
