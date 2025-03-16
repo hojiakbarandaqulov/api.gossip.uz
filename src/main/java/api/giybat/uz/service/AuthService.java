@@ -60,7 +60,7 @@ public class AuthService {
 
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
-        emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(),language);
+        emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(), language);
         return ApiResponse.ok(messagesService.getMessage("registration.successful", language));
     }
 
@@ -104,10 +104,10 @@ public class AuthService {
             throw new AppBadException(messagesService.getMessage("username.password.wrong", language));
         }
         ProfileEntity profile = optional.get();
-        if (profile.getStatus().equals(GeneralStatus.ACTIVE)) {
+        if (!profile.getStatus().equals(GeneralStatus.ACTIVE)) {
             throw new AppBadException(messagesService.getMessage("wrong.status", language));
         }
-        emailSendingService.sentResetPasswordEmail(dto.getUsername());
+        emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
         return ApiResponse.ok(messagesService.getMessage("reset.password.response", language));
     }
 }

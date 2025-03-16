@@ -2,6 +2,8 @@ package api.giybat.uz.service;
 
 import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.enums.ProfileRole;
+import api.giybat.uz.enums.SmsType;
+import api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.util.JwtUtil;
 import api.giybat.uz.util.RandomUtil;
 import jakarta.mail.MessagingException;
@@ -13,6 +15,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -24,9 +27,13 @@ public class EmailSendingService {
     @Value("${server.domain}")
     private String serverDomain;
 
+    private final EmailHistoryService emailHistoryService;
+    private final ResourceBundleService resourceBundleService;
     private final JavaMailSender mailSender;
 
-    public EmailSendingService(JavaMailSender mailSender) {
+    public EmailSendingService(EmailHistoryService emailHistoryService, ResourceBundleService resourceBundleService, JavaMailSender mailSender) {
+        this.emailHistoryService = emailHistoryService;
+        this.resourceBundleService = resourceBundleService;
         this.mailSender = mailSender;
     }
 
@@ -55,15 +62,27 @@ public class EmailSendingService {
                 "    there</a></p>\n" +
                 "</body>\n" +
                 "</html>";
-        body = String.format(body, serverDomain, JwtUtil.encode(profileId,email), lang);
+        body = String.format(body, serverDomain, JwtUtil.encode(profileId, email), lang);
         sendMimeEmail(email, subject, body);
     }
 
-    public void sentResetPasswordEmail(String username) {
-        String randomCode = RandomUtil.getRandomCode();
+    public void sentResetPasswordEmail(String username, AppLanguage language) {
+        String code = RandomUtil.getRandomCode();
         String subject = "Reset password Conformation";
-        String body = "How are you. This is confirm code reset password send code %s : "+randomCode;
-        sendMimeEmail(username, subject, body);
+        String body = "How are you. This is confirm code reset password send code %s : " + code;
+        checkAndSendMineEmail(username, subject, body,code,language);
+
+    }
+
+    private void checkAndSendMineEmail(String email, String subject, String body, String code, AppLanguage language) {
+        Long count = emailHistoryService.getEmailCount(email);
+        if (count >= 3) {
+            throw new AppBadException(resourceBundleService.getMessage("email.reached.sms", language));
+        }
+
+        sendMimeEmail(email, subject, body);
+        emailHistoryService.create(email, code, SmsType.RESET_PASSWORD);
+
     }
 
     private void sendMimeEmail(String email, String subject, String body) {

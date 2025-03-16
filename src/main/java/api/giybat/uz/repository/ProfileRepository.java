@@ -20,4 +20,6 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Integer>
     @Transactional
     @Query("update ProfileEntity  set status=?2 where id=?1")
     void changeStatus(Integer id,GeneralStatus status);
+
+
 }
