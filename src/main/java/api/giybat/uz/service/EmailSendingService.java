@@ -82,7 +82,6 @@ public class EmailSendingService {
 
         sendMimeEmail(email, subject, body);
         emailHistoryService.create(email, code, SmsType.RESET_PASSWORD);
-
     }
 
     private void sendMimeEmail(String email, String subject, String body) {

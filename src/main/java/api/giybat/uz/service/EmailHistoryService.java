@@ -16,7 +16,6 @@ import java.util.Optional;
 @Service
 public class EmailHistoryService {
     private final EmailHistoryRepository emailHistoryRepository;
-    private EmailHistoryRepository emailHistoryService;
     private final ResourceBundleService bundleService;
 
     public void create(String email, String code, SmsType emailType){
@@ -26,7 +25,7 @@ public class EmailHistoryService {
         emailHistoryEntity.setEmailType(emailType);
         emailHistoryEntity.setAttemptCount(0);
         emailHistoryEntity.setCreatedDate(LocalDateTime.now());
-        emailHistoryService.save(emailHistoryEntity);
+        emailHistoryRepository.save(emailHistoryEntity);
     }
 
     public Long getEmailCount(String email){
@@ -55,6 +54,5 @@ public class EmailHistoryService {
         if (LocalDateTime.now().isAfter(expDate)){
             throw  new AppBadException(bundleService.getMessage("verification.failed",language));
         }
-
     }
 }
