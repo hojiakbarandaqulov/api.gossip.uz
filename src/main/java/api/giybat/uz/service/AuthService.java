@@ -2,6 +2,7 @@ package api.giybat.uz.service;
 
 import api.giybat.uz.dto.*;
 import api.giybat.uz.dto.auth.RegistrationDTO;
+import api.giybat.uz.dto.auth.ResetPasswordConfirmDTO;
 import api.giybat.uz.dto.auth.ResetPasswordDTO;
 import api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.enums.AppLanguage;
@@ -10,7 +11,9 @@ import api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.repository.ProfileRepository;
 import api.giybat.uz.repository.ProfileRoleRepository;
+import api.giybat.uz.service.sms.EmailSendingService;
 import api.giybat.uz.util.JwtUtil;
+import api.giybat.uz.util.PhoneUtil;
 import io.jsonwebtoken.JwtException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -109,5 +112,21 @@ public class AuthService {
         }
         emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
         return ApiResponse.ok(messagesService.getMessage("reset.password.response", language));
+    }
+
+    public ApiResponse<String> resetPasswordConfirm(ResetPasswordConfirmDTO dto, AppLanguage language) {
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
+        if (optional.isEmpty()) {
+            throw new AppBadException(messagesService.getMessage("verification.wrong", language));
+        }
+        ProfileEntity profile = optional.get();
+        if (!profile.getStatus().equals(GeneralStatus.ACTIVE)) {
+            throw new AppBadException(messagesService.getMessage("wrong.status", language));
+        }
+        if (PhoneUtil.validatePhone(dto.getUsername())){
+
+        }
+
+        return null;
     }
 }

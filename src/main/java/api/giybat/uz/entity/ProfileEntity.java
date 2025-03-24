@@ -33,5 +33,4 @@ public class ProfileEntity {
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 
-
 }

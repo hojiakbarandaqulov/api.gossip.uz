@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface EmailHistoryRepository extends JpaRepository<EmailHistoryEntity, String> {
+
     Long countByEmailAndCreatedDateBetween(String email, LocalDateTime from, LocalDateTime to);
 
     Optional<EmailHistoryEntity> findTop1ByEmailOrderByCreatedDateDesc(String email);
@@ -18,4 +19,5 @@ public interface EmailHistoryRepository extends JpaRepository<EmailHistoryEntity
     @Transactional
     @Query("update EmailHistoryEntity set attemptCount = coalesce(attemptCount,0)+1 where  id=?1")
     void updateAttemptCount(String id);
+
 }

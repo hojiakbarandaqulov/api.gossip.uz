@@ -17,4 +17,5 @@ public class PostController {
         System.out.println(SpringSecurityUtil.getCurrentProfile());
         return "DONE";
     }
+
 }

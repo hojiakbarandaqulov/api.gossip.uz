@@ -26,6 +26,7 @@ public class EmailHistoryEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "email_type")
     private SmsType emailType;
+
     @Column(name = "attemp_count")
     private Integer attemptCount;
 

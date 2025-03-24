@@ -1,9 +1,10 @@
-package api.giybat.uz.service;
+package api.giybat.uz.service.sms;
 
 import api.giybat.uz.enums.AppLanguage;
-import api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.enums.SmsType;
 import api.giybat.uz.exps.AppBadException;
+import api.giybat.uz.service.EmailHistoryService;
+import api.giybat.uz.service.ResourceBundleService;
 import api.giybat.uz.util.JwtUtil;
 import api.giybat.uz.util.RandomUtil;
 import jakarta.mail.MessagingException;
@@ -14,8 +15,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -82,7 +81,6 @@ public class EmailSendingService {
 
         sendMimeEmail(email, subject, body);
         emailHistoryService.create(email, code, SmsType.RESET_PASSWORD);
-
     }
 
     private void sendMimeEmail(String email, String subject, String body) {

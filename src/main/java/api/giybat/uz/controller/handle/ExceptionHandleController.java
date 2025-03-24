@@ -1,7 +1,6 @@
-package api.giybat.uz.controller;
+package api.giybat.uz.controller.handle;
 
 import api.giybat.uz.exps.AppBadException;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
