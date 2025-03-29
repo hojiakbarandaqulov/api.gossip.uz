@@ -49,7 +49,7 @@ public class AuthController {
 
     @PostMapping("/registration/reset-password/confirm")
     public ResponseEntity<ApiResponse<String>> resentPassword(@Valid @RequestBody ResetPasswordConfirmDTO dto,
-                                                      @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language) {
+                                                             @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language) {
         ApiResponse<String> ok = authService.resetPasswordConfirm(dto, language);
         return ResponseEntity.ok(ok);
     }

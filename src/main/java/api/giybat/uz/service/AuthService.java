@@ -12,6 +12,8 @@ import api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.repository.ProfileRepository;
 import api.giybat.uz.repository.ProfileRoleRepository;
 import api.giybat.uz.service.sms.EmailSendingService;
+import api.giybat.uz.service.sms.SmsService;
+import api.giybat.uz.util.EmailUtil;
 import api.giybat.uz.util.JwtUtil;
 import api.giybat.uz.util.PhoneUtil;
 import io.jsonwebtoken.JwtException;
@@ -30,8 +32,9 @@ public class AuthService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ProfileRoleService profileRoleService;
     private final ResourceBundleService messagesService;
+    private final SmsService smsService;
 
-    public AuthService(ProfileRepository profileRepository, EmailSendingService emailSendingService, ProfileService profileService, ProfileRoleRepository profileRoleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRoleService profileRoleService, ResourceBundleService messagesService) {
+    public AuthService(ProfileRepository profileRepository, EmailSendingService emailSendingService, ProfileService profileService, ProfileRoleRepository profileRoleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRoleService profileRoleService, ResourceBundleService messagesService, SmsService smsService) {
         this.profileRepository = profileRepository;
         this.emailSendingService = emailSendingService;
         this.profileService = profileService;
@@ -39,6 +42,7 @@ public class AuthService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.profileRoleService = profileRoleService;
         this.messagesService = messagesService;
+        this.smsService = smsService;
     }
 
     public ApiResponse<String> registration(RegistrationDTO dto, AppLanguage language) {
@@ -123,10 +127,13 @@ public class AuthService {
         if (!profile.getStatus().equals(GeneralStatus.ACTIVE)) {
             throw new AppBadException(messagesService.getMessage("wrong.status", language));
         }
-        if (PhoneUtil.validatePhone(dto.getUsername())){
-
+        if (PhoneUtil.isPhone(dto.getUsername())){
+            smsService.sendSms(dto.getUsername());
+        } else if (EmailUtil.isEmail(dto.getUsername()) ){
+            emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
         }
+        emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
 
-        return null;
+        return ApiResponse.ok(messagesService.getMessage("reset.password.response", language));
     }
 }

@@ -68,9 +68,8 @@ public class EmailSendingService {
     public void sentResetPasswordEmail(String username, AppLanguage language) {
         String code = RandomUtil.getRandomCode();
         String subject = "Reset password Conformation";
-        String body = "How are you. This is confirm code reset password send code %s : " + code;
+        String body = "How are you. This is confirm code reset password send code: " + code;
         checkAndSendMineEmail(username, subject, body,code,language);
-
     }
 
     private void checkAndSendMineEmail(String email, String subject, String body, String code, AppLanguage language) {
@@ -78,7 +77,6 @@ public class EmailSendingService {
         if (count >= 3) {
             throw new AppBadException(resourceBundleService.getMessage("email.reached.sms", language));
         }
-
         sendMimeEmail(email, subject, body);
         emailHistoryService.create(email, code, SmsType.RESET_PASSWORD);
     }
