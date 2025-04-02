@@ -132,8 +132,8 @@ public class AuthService {
         } else if (EmailUtil.isEmail(dto.getUsername()) ){
             emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
         }
+        profileRepository.updatePassword(profile.getId(), bCryptPasswordEncoder.encode(dto.getPassword()));
         emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
-
         return ApiResponse.ok(messagesService.getMessage("reset.password.response", language));
     }
 }

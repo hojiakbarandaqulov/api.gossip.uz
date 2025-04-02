@@ -1,0 +1,10 @@
+### attach upload
+POST http://localhost:8080/api/v1/attach/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="OpenCV.png"
+
+< C:\Users\hojia\Pictures\OpenCV.png
+
+
