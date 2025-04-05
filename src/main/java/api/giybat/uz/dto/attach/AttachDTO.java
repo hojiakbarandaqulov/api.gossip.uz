@@ -1,6 +1,7 @@
 package api.giybat.uz.dto.attach;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.cglib.core.Local;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttachDTO {
+    @NotBlank(message = "id required")
     private String id;
     private String originalName;
     private String path;

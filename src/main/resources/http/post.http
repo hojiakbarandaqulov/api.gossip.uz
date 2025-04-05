@@ -1,8 +1,12 @@
 ### Create Post
-POST http://localhost:8080/post/create
+POST http://localhost:8080/api/v1/post/create
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzM4NzY5NTg2LCJleHAiOjE3MzkxMTUxODZ9.OHB8QyooixRKyowQULqF_Kk8TBugn-WaXZESTatOvKDpY5JKWc4gCLZ_ZBsbByxWZdedEYK33B_5Px2OeDSaBg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQzOTMyMjk1LCJleHAiOjE3NDQyNzc4OTV9.z92pl9ny2OQtHR4bDyXKG9u82V6QuCD1yfry7eVosA9uejj1kzsCIyxuc0MxUq3wj4cI8_8YyGLNeZ9LQFOgdA
 
 {
-
+  "title": "G'iybat 1",
+  "content": "dfkjldfkmdlkfm.f,m.dfm.dfknmkl",
+  "photo": {
+    "id": "8c7a4227-7920-4a62-b6a6-6e8b2d864906.jpg"
+  }
 }

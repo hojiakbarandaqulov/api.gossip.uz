@@ -1,6 +1,7 @@
 ### attach upload
 POST http://localhost:8080/api/v1/attach/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQzOTMyMjk1LCJleHAiOjE3NDQyNzc4OTV9.z92pl9ny2OQtHR4bDyXKG9u82V6QuCD1yfry7eVosA9uejj1kzsCIyxuc0MxUq3wj4cI8_8YyGLNeZ9LQFOgdA
 
 --WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="OpenCV.png"
