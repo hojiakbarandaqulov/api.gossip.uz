@@ -1,13 +1,11 @@
 package api.giybat.uz.service;
 
-import api.giybat.uz.dto.ApiResponse;
+import api.giybat.uz.dto.attach.AttachCreateDTO;
 import api.giybat.uz.dto.attach.AttachDTO;
 import api.giybat.uz.entity.AttachEntity;
 import api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.repository.AttachRepository;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -122,6 +120,17 @@ public class AttachService {
         dto.setUrl(serverUrl + "/attach/upload/" + entity.getId());
         return dto;
     }
+    public String getUrl(String fileName) {
+        return attachUrl + "/open/v2/" + fileName;
+    }
 
+    public AttachDTO attachDTO(String photoId){
+        if (photoId==null) return null;
+
+        AttachDTO dto = new AttachDTO();
+        dto.setId(photoId);
+        dto.setUrl(getUrl(photoId));
+        return dto;
+    }
 }
 

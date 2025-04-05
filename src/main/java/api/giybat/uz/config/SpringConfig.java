@@ -60,6 +60,7 @@ public class SpringConfig {
 
                     .requestMatchers("/api/v1/auth/**").permitAll()
                     .requestMatchers("/api/v1/attach/**").permitAll()
+                    .requestMatchers("/api/v1/post/create").permitAll()
                     .anyRequest()
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
