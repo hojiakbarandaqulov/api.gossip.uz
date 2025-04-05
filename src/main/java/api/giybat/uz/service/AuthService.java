@@ -17,12 +17,15 @@ import api.giybat.uz.util.EmailUtil;
 import api.giybat.uz.util.JwtUtil;
 import api.giybat.uz.util.PhoneUtil;
 import io.jsonwebtoken.JwtException;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-
+@AllArgsConstructor
+@Slf4j
 @Service
 public class AuthService {
     private final ProfileRepository profileRepository;
@@ -34,16 +37,6 @@ public class AuthService {
     private final ResourceBundleService messagesService;
     private final SmsService smsService;
 
-    public AuthService(ProfileRepository profileRepository, EmailSendingService emailSendingService, ProfileService profileService, ProfileRoleRepository profileRoleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRoleService profileRoleService, ResourceBundleService messagesService, SmsService smsService) {
-        this.profileRepository = profileRepository;
-        this.emailSendingService = emailSendingService;
-        this.profileService = profileService;
-        this.profileRoleRepository = profileRoleRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.profileRoleService = profileRoleService;
-        this.messagesService = messagesService;
-        this.smsService = smsService;
-    }
 
     public ApiResponse<String> registration(RegistrationDTO dto, AppLanguage language) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
@@ -133,7 +126,6 @@ public class AuthService {
             emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
         }
         profileRepository.updatePassword(profile.getId(), bCryptPasswordEncoder.encode(dto.getPassword()));
-        emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
-        return ApiResponse.ok(messagesService.getMessage("reset.password.response", language));
+        return ApiResponse.ok(messagesService.getMessage("reset.password.success", language));
     }
 }

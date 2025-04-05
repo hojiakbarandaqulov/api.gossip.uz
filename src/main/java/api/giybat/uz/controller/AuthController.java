@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-    @Autowired
-    private  AuthService authService;
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/registration")
     public ResponseEntity<ApiResponse<String>> registration(@Valid @RequestBody RegistrationDTO dto,
