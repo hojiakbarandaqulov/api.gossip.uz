@@ -29,48 +29,11 @@ public class AttachService {
     @Value("${attach.upload.url}")
     public String attachUrl;
 
-  /*  @Value("${attach.upload.folder}")
-    private String folderName;
-    @Value("${attach.url}")
-    private String attachUrl;*/
-
     private final AttachRepository attachRepository;
 
     public AttachService(AttachRepository attachRepository) {
         this.attachRepository = attachRepository;
     }
-
-
- /*   public AttachDTO saveAttach(MultipartFile file) {
-
-        try {
-            String pathFolder = getYmDString();
-            File folder = new File("uploads/" + pathFolder);
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-
-            String key = UUID.randomUUID().toString(); // dasdasd-dasdasda-asdasda-asdasd
-            String extension = getExtension(file.getOriginalFilename()); // dasda.asdas.dasd.jpg
-            // save to system
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get("uploads/" + pathFolder + "/" + key + "." + extension);
-            Files.write(path, bytes);
-            // save to db
-            AttachEntity entity = new AttachEntity();
-            entity.setId(key + "." + extension);
-            entity.setPath(pathFolder); // 2024/06/08
-            entity.setOriginalName(file.getOriginalFilename());
-            entity.setSize(file.getSize());
-            entity.setExtension(extension);
-            entity.setCreatedDate(LocalDateTime.now());
-            attachRepository.save(entity);
-            return toDTO(entity);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
 
     private static final Map<String, Object> imageExtensionMap = new HashMap<>();
 
@@ -113,6 +76,26 @@ public class AttachService {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    public byte[] open_general(String attachId) {
+        byte[] data;
+        try {
+            AttachEntity entity = get(attachId);
+            String path = entity.getPath() + "/" + attachId;
+            Path file = Paths.get("uploads/" + path);
+            data = Files.readAllBytes(file);
+            return data;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new byte[0];
+    }
+
+    private AttachEntity get(String attachId) {
+        return attachRepository.findById(attachId).orElseThrow(() -> {
+            throw new AppBadException("Attach not found");
+        });
     }
 
     public String getYmDString() {
