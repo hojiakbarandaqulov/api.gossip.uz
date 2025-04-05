@@ -68,7 +68,7 @@ public class EmailSendingService {
     public void sentResetPasswordEmail(String username, AppLanguage language) {
         String code = RandomUtil.getRandomCode();
         String subject = "Reset password Conformation";
-        String template = "This is your password reset code: "+code;
+        String template = resourceBundleService.getMessage("confirm.code.reset.password: ",language);
         String body = String.format(template, code);
         checkAndSendMineEmail(username, subject, body, code, language);
     }
