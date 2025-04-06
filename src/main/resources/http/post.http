@@ -10,3 +10,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1Q
     "id": "8c7a4227-7920-4a62-b6a6-6e8b2d864906.jpg"
   }
 }
+
+### Profile Post List
+GET http://localhost:8080/api/v1/post/profile
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQzOTMyMjk1LCJleHAiOjE3NDQyNzc4OTV9.z92pl9ny2OQtHR4bDyXKG9u82V6QuCD1yfry7eVosA9uejj1kzsCIyxuc0MxUq3wj4cI8_8YyGLNeZ9LQFOgdA

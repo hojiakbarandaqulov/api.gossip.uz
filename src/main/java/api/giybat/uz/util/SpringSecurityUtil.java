@@ -11,25 +11,9 @@ public class SpringSecurityUtil {
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
         return user;
     }
+
     public static Integer getCurrentUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new RuntimeException("Foydalanuvchi tizimga kirmagan.");
-        }
-
-        Object principal = authentication.getPrincipal();
-
-        if (principal instanceof String s && s.equals("anonymousUser")) {
-            throw new RuntimeException("Anonymous foydalanuvchi: token yo‘q yoki noto‘g‘ri.");
-        }
-
-        if (principal instanceof CustomUserDetails user) {
-            return user.getId();
-        }
-
-        throw new RuntimeException("Noto‘g‘ri principal: " + principal.getClass().getName());
+        CustomUserDetails user = getCurrentProfile();
+        return user.getId();
     }
-
-
 }

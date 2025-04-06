@@ -9,6 +9,7 @@ import api.giybat.uz.util.SpringSecurityUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -30,13 +31,19 @@ public class PostService {
         postEntity.setVisible(true);
         postEntity.setProfileId(SpringSecurityUtil.getCurrentUserId());
         postRepository.save(postEntity);
-        return toDTO(postEntity);
+        return toInfoDTO(postEntity);
     }
 
-    public PostDTO toDTO(PostEntity postEntity) {
+    public List<PostDTO> getProfilePostList() {
+        Integer id = SpringSecurityUtil.getCurrentUserId();
+        List<PostEntity> entityList = postRepository.getAllByProfileIdAndVisibleTrue(id);
+        List<PostDTO> dtoList = entityList.stream().map(this::toInfoDTO).toList();
+        return dtoList;
+    }
+
+    public PostDTO toInfoDTO(PostEntity postEntity) {
         PostDTO dto = new PostDTO();
         dto.setId(postEntity.getId());
-        dto.setContent(postEntity.getContent());
         dto.setTitle(postEntity.getTitle());
         dto.setCreatedDate(postEntity.getCreatedDate());
         dto.setPhoto(attachService.attachDTO(postEntity.getPhotoId()));
