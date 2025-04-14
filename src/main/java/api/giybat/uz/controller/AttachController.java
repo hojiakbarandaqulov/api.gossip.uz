@@ -31,6 +31,4 @@ public class AttachController {
     public byte[] open_general(@PathVariable("fileName") String fileName) {
         return attachService.open_general(fileName);
     }
-
-
 }

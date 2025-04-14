@@ -1,9 +1,9 @@
 package api.giybat.uz.controller;
 
+import api.giybat.uz.dto.ApiResponse;
 import api.giybat.uz.dto.post.PostCreateDTO;
 import api.giybat.uz.dto.post.PostDTO;
 import api.giybat.uz.service.PostService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,8 +20,9 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<PostDTO> create( @RequestBody PostCreateDTO dto){
-        return ResponseEntity.ok(postService.create(dto));
+    public ResponseEntity<PostDTO> create(@RequestBody PostCreateDTO post){
+        PostDTO postDTO = postService.create(post);
+        return ResponseEntity.ok(postDTO);
     }
 
 }

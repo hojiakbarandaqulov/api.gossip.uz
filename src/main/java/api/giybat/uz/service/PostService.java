@@ -1,11 +1,12 @@
 package api.giybat.uz.service;
 
-import api.giybat.uz.dto.attach.AttachDTO;
 import api.giybat.uz.dto.post.PostCreateDTO;
 import api.giybat.uz.dto.post.PostDTO;
 import api.giybat.uz.entity.PostEntity;
+import api.giybat.uz.mapper.PostMapper;
 import api.giybat.uz.repository.PostRepository;
 import api.giybat.uz.util.SpringSecurityUtil;
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,12 +14,11 @@ import java.time.LocalDateTime;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final PostMapper mapper;
 
-    private final AttachService attachService;
-
-    public PostService(PostRepository postRepository, AttachService attachService) {
+    public PostService(PostRepository postRepository, PostMapper mapper) {
         this.postRepository = postRepository;
-        this.attachService = attachService;
+        this.mapper = mapper;
     }
 
     public PostDTO create(PostCreateDTO dto) {
@@ -26,21 +26,13 @@ public class PostService {
         postEntity.setTitle(dto.getTitle());
         postEntity.setContent(dto.getContent());
         postEntity.setPhotoId(dto.getPhoto().getId());
-        postEntity.setCreatedDate(LocalDateTime.now());
         postEntity.setVisible(true);
+        postEntity.setCreatedDate(LocalDateTime.now());
         postEntity.setProfileId(SpringSecurityUtil.getCurrentUserId());
         postRepository.save(postEntity);
-        return toDTO(postEntity);
+        PostDTO postDto = mapper.toPostDto(postEntity);
+        return postDto;
     }
 
-    public PostDTO toDTO(PostEntity postEntity) {
-        PostDTO dto = new PostDTO();
-        dto.setId(postEntity.getId());
-        dto.setContent(postEntity.getContent());
-        dto.setTitle(postEntity.getTitle());
-        dto.setCreatedDate(postEntity.getCreatedDate());
-        dto.setPhoto(attachService.attachDTO(postEntity.getPhotoId()));
-        return dto;
-    }
+
 }
-

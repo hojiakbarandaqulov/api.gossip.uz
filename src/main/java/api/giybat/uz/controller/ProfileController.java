@@ -18,8 +18,4 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    /*public ResponseEntity<ProfileDTO> createProfile(ProfileDTO profileDTO) {
-        profileService.create()
-    }*/
-
 }
