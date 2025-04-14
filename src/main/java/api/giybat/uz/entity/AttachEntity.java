@@ -12,7 +12,6 @@ import static jakarta.persistence.GenerationType.*;
 @Table(name = "attach")
 public class AttachEntity {
     @Id
-    @Column(length = 255)
     private String id;
 
     @Column(name = "original_name", length = 255)
