@@ -17,14 +17,20 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Integer>
 
     Optional<ProfileEntity> findByIdAndVisibleTrue(Integer id);
 
+    @Transactional
+    @Modifying
+    @Query("update ProfileEntity set password=?2 where id =?1")
+    void updatePassword(Integer id, String password);
+
     @Modifying
     @Transactional
     @Query("update ProfileEntity  set status=?2 where id=?1")
     void changeStatus(Integer id, GeneralStatus status);
 
+
+
     @Modifying
     @Transactional
-    @Query("update ProfileEntity set password=?2 where id =?1")
-    void updatePassword(Integer id, String password);
-
+    @Query("update ProfileEntity set name=?2 where id=?1")
+    void updateDetail(Integer id, String name);
 }

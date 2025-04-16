@@ -61,7 +61,7 @@ public class AuthService {
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
         emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(), language);
-        return ApiResponse.ok(messagesService.getMessage("registration.successful", language));
+        return new  ApiResponse(messagesService.getMessage("registration.successful", language));
     }
 
     public ApiResponse<String> regVerification(String token, AppLanguage language) {
@@ -70,7 +70,7 @@ public class AuthService {
             ProfileEntity profile = profileService.getById(profileId);
             if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
                 profileRepository.changeStatus(profileId, GeneralStatus.ACTIVE);
-                return ApiResponse.ok();
+                return new ApiResponse(messagesService.getMessage("verification.successful", language));
             }
         } catch (JwtException e) {
         }
@@ -95,7 +95,7 @@ public class AuthService {
         response.setRole(profileRoleRepository.getAllRolesListByProfileId(profile.getId()));
         response.setJwt(JwtUtil.encode(profile.
                 getUsername(), profile.getId(), response.getRole()));
-        return ApiResponse.ok(response);
+        return new ApiResponse<>(response);
     }
 
     public ApiResponse<String> resetPassword(ResetPasswordDTO dto, AppLanguage language) {
@@ -108,7 +108,7 @@ public class AuthService {
             throw new AppBadException(messagesService.getMessage("wrong.status", language));
         }
         emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
-        return ApiResponse.ok(messagesService.getMessage("reset.password.response", language));
+        return new ApiResponse<>(messagesService.getMessage("reset.password.response", language));
     }
 
     public ApiResponse<String> resetPasswordConfirm(ResetPasswordConfirmDTO dto, AppLanguage language) {
@@ -126,6 +126,6 @@ public class AuthService {
             emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
         }
         profileRepository.updatePassword(profile.getId(), bCryptPasswordEncoder.encode(dto.getPassword()));
-        return ApiResponse.ok(messagesService.getMessage("reset.password.success", language));
+        return new ApiResponse<>(messagesService.getMessage("reset.password.success", language));
     }
 }

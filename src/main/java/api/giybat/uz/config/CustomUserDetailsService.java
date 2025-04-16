@@ -4,6 +4,7 @@ import api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.repository.ProfileRepository;
 import api.giybat.uz.repository.ProfileRoleRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,17 +12,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@AllArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final ProfileRepository profileRepository;
     private final ProfileRoleRepository profileRoleRepository;
-
-    public CustomUserDetailsService(ProfileRepository profileRepository, ProfileRoleRepository profileRoleRepository) {
-        this.profileRepository = profileRepository;
-        this.profileRoleRepository = profileRoleRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
