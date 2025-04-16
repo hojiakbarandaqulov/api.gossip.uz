@@ -27,4 +27,10 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Integer>
     @Query("update ProfileEntity set password=?2 where id =?1")
     void updatePassword(Integer id, String password);
 
+
+
+    @Modifying
+    @Transactional
+    @Query("update ProfileEntity set name=?1 where id=?1")
+    void updateDetail(Integer id, String name);
 }

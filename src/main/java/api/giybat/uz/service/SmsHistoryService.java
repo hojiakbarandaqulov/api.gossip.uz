@@ -138,6 +138,6 @@ public class SmsHistoryService {
             throw new AppBadException(message);
         }
         smsHistoryRepository.updateStatus(entity.getId(), SmsType.CONFIRM_RESET_PASSWORD);
-        return new ApiResponse<>("Success!", 200, false);
+        return new ApiResponse<>("Success!",language);
     }
 }
