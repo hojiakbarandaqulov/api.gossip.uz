@@ -22,9 +22,9 @@ public class ProfileController {
 
     @PostMapping("/detail")
     public ResponseEntity<ApiResponse<String>> detail(@Valid @RequestBody ProfileUpdateDetailDTO profileDTO,
-                                             @RequestHeader(value = "Accept-Language",defaultValue = "UZ")AppLanguage language) {
+                                                      @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language) {
         ApiResponse<String> apiResponse = profileService.updateDetail(profileDTO, language);
-        return  ResponseEntity.ok(apiResponse);
+        return ResponseEntity.ok(apiResponse);
     }
 
 

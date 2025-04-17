@@ -19,12 +19,10 @@ public class ProfileService {
 
     public ApiResponse<String> updateDetail(ProfileUpdateDetailDTO updateDetailDTO,
                                             AppLanguage language){
-        Integer profileId= SpringSecurityUtil.getCurrentUserId();
+        Integer profileId= SpringSecurityUtil.getProfileId();
         profileRepository.updateDetail(profileId,updateDetailDTO.getName());
-
-        return new ApiResponse<>("profile.detail.update",language);
+        return new ApiResponse<>("profile.detail.update.success",language);
     }
-
 
     public ProfileEntity getById(Integer id) {
         return profileRepository.findByIdAndVisibleTrue(id).orElseThrow(() -> new AppBadException("Profile not found"));
