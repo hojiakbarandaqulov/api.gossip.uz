@@ -28,7 +28,7 @@ public class PostService {
         postEntity.setPhotoId(dto.getPhoto().getId());
         postEntity.setVisible(true);
         postEntity.setCreatedDate(LocalDateTime.now());
-        postEntity.setProfileId(SpringSecurityUtil.getCurrentUserId());
+        postEntity.setProfileId(SpringSecurityUtil.getProfileId());
         postRepository.save(postEntity);
         PostDTO postDto = mapper.toPostDto(postEntity);
         return postDto;

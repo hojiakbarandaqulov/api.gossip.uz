@@ -12,9 +12,14 @@ public class SpringSecurityUtil {
         return user;
     }
 
-    public static Integer getCurrentUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
-        return user.getId();
+    public static Integer getProfileId() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof CustomUserDetails) {
+            CustomUserDetails user = (CustomUserDetails) principal;
+            return user.getId();
+        } else if (principal instanceof String) {
+            String username = (String) principal;
+        }
+        return null;
     }
 }
