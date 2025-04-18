@@ -48,10 +48,6 @@ public class ProfileService {
         return new ApiResponse<>("profile.password.update.success",language);
     }
 
-    public ProfileEntity getById(Integer id) {
-        return profileRepository.findByIdAndVisibleTrue(id).orElseThrow(() -> new AppBadException("Profile not found"));
-    }
-
     public ApiResponse<String> updateUsername(ProfileUpdateUsernameDTO profileDTO, AppLanguage language) {
         Optional<ProfileEntity> optional=profileRepository.findByUsernameAndVisibleTrue(profileDTO.getUsername());
         if (optional.isPresent()){
@@ -65,5 +61,9 @@ public class ProfileService {
         Integer profileId = SpringSecurityUtil.getProfileId();
         profileRepository.updateTempUsername(profileId, profileDTO.getUsername());
         return new ApiResponse<>("reset.password.response",language);
+    }
+
+    public ProfileEntity getById(Integer id) {
+        return profileRepository.findByIdAndVisibleTrue(id).orElseThrow(() -> new AppBadException("Profile not found"));
     }
 }

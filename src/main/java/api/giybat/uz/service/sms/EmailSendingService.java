@@ -69,8 +69,8 @@ public class EmailSendingService {
         String code = RandomUtil.getRandomCode();
         String subject = "Reset password Conformation";
         String template = resourceBundleService.getMessage("confirm.code.reset.password",language);
-        template = String.format(template, code);
-        checkAndSendMineEmail(username, subject, template,":"+ code, language);
+        template = String.format(template+":"+code);
+        checkAndSendMineEmail(username, subject, template, code, language);
     }
 
     private void checkAndSendMineEmail(String email, String subject, String body, String code, AppLanguage language) {
