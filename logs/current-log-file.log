@@ -110,3 +110,4 @@
 18 Apr 2025 - 19:27:07.793 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
 18 Apr 2025 - 19:27:08.253 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
 18 Apr 2025 - 19:27:08.262 [main] INFO  api.giybat.uz.Application - Started Application in 4.656 seconds (process running for 5.175)
+
