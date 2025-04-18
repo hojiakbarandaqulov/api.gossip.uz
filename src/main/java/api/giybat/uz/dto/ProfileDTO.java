@@ -15,5 +15,4 @@ public class ProfileDTO {
     private String username;
     private List<ProfileRole> role;
     private String jwt;
-
 }

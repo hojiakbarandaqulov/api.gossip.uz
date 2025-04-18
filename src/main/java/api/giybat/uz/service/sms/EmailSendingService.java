@@ -69,7 +69,7 @@ public class EmailSendingService {
         String code = RandomUtil.getRandomCode();
         String subject = "Reset password Conformation";
         String template = "confirm code reset password: ";
-        String body = String.format(template, code);
+        String body = String.format(template+code);
         checkAndSendMineEmail(username, subject, body, code, language);
     }
 
