@@ -6,3 +6,22 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1Q
 {
   "name": "Xojiakbar"
 }
+
+###profile password update
+PUT http://localhost:8080/api/v1/profile/update/password
+Content-Type: application/json
+
+{
+  "currentPassword": "",
+  "newPassword": ""
+}
+
+### username updated
+PUT http://localhost:8080/api/v1/profile/update/username
+Content-Type: application/json
+Accept-Language: RU
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ0OTkwODg1LCJleHAiOjE3NDUzMzY0ODV9.6jdmq3xAp8lUD22m0KtJvwUcZlB0PJguANl8m2fOdMQkFeu4kHJktKamJeLxD1AVFSafH9j4-b16ai8uuR10hQ
+
+{
+  "username": "codeuz91@gmail.com"
+}

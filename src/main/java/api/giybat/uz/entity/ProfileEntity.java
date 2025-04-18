@@ -19,7 +19,9 @@ public class ProfileEntity {
     private String name;
 
     @Column(name = "username")
-    private String username; // email else phone
+    private String username;
+    @Column(name = "temp_username")
+    private String tempUsername; // email else phone
 
     @Column(name = "password")
     private String password;
