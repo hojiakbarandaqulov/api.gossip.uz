@@ -36,5 +36,4 @@ public class PostEntity {
 
     @Column(name = "visible")
     private Boolean visible=true;
-
 }
