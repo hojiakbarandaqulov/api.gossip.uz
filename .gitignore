@@ -34,3 +34,4 @@ build/
 /g'iybat.uz-talablar.txt
 /src/main/resources/application-local.properties
 /logs/current-log-file.log.txt
+/logs/current-log-file.log
