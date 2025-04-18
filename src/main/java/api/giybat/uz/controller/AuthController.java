@@ -56,7 +56,6 @@ public class AuthController {
         ApiResponse<String> ok = authService.resetPasswordConfirm(dto, language);
         return ResponseEntity.ok(ok);
     }
-
 }
 
 
