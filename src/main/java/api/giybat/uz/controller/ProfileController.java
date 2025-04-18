@@ -3,6 +3,7 @@ package api.giybat.uz.controller;
 import api.giybat.uz.dto.ApiResponse;
 import api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.dto.profile.ProfileUpdateDetailDTO;
+import api.giybat.uz.dto.profile.ProfileUpdatePasswordDTO;
 import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.service.ProfileService;
 import jakarta.validation.Valid;
@@ -20,12 +21,17 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @PostMapping("/detail")
-    public ResponseEntity<ApiResponse<String>> detail(@Valid @RequestBody ProfileUpdateDetailDTO profileDTO,
+    @PutMapping("/detail")
+    public ResponseEntity<ApiResponse<String>> updateDetail(@Valid @RequestBody ProfileUpdateDetailDTO profileDTO,
                                                       @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language) {
         ApiResponse<String> apiResponse = profileService.updateDetail(profileDTO, language);
         return ResponseEntity.ok(apiResponse);
     }
 
-
+    @PutMapping("/update/password")
+    public ResponseEntity<ApiResponse<String>> updatePassword(@Valid @RequestBody ProfileUpdatePasswordDTO profileDTO,
+                                                      @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language) {
+        ApiResponse<String> apiResponse = profileService.updatePassword(profileDTO, language);
+        return ResponseEntity.ok(apiResponse);
+    }
 }

@@ -1,8 +1,8 @@
 ### profile update detail
-POST http://localhost:8080/api/v1/profile/detail
+PUT http://localhost:8080/api/v1/profile/detail
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ0OTEwMDk5LCJleHAiOjE3NDUyNTU2OTl9.neD3ryoixltBtTUTdd-R6GdgwnMr1b6W-wMR1vQ3yxhxVKAgPovlxBel1QAyB3PXcautgxHyUeRLM6j8j4bDmQ
 
 {
-  "name": "Java"
+  "name": "Xojiakbar"
 }

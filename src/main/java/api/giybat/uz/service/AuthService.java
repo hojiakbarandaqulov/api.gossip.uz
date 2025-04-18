@@ -61,7 +61,7 @@ public class AuthService {
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
         emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(), language);
-        return new  ApiResponse(messagesService.getMessage("registration.successful", language));
+        return new  ApiResponse<>(messagesService.getMessage("registration.successful", language));
     }
 
     public ApiResponse<String> regVerification(String token, AppLanguage language) {
@@ -70,7 +70,7 @@ public class AuthService {
             ProfileEntity profile = profileService.getById(profileId);
             if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
                 profileRepository.changeStatus(profileId, GeneralStatus.ACTIVE);
-                return new ApiResponse(messagesService.getMessage("verification.successful", language));
+                return new ApiResponse<>(messagesService.getMessage("verification.successful", language));
             }
         } catch (JwtException e) {
         }
