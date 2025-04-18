@@ -36,7 +36,7 @@ public class ProfileService {
             throw new AppBadException("wrong.password");
         }
         profileRepository.updatePassword(profileId, profileDTO.getCurrentPassword());
-        return new ApiResponse<>("profile.detail.update.success",language);
+        return new ApiResponse<>("profile.password.update.success",language);
     }
 
     public ProfileEntity getById(Integer id) {
