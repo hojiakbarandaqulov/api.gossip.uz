@@ -19,8 +19,18 @@ Content-Type: application/json
 ### username updated
 PUT http://localhost:8080/api/v1/profile/update/username
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ0OTkwODg1LCJleHAiOjE3NDUzMzY0ODV9.6jdmq3xAp8lUD22m0KtJvwUcZlB0PJguANl8m2fOdMQkFeu4kHJktKamJeLxD1AVFSafH9j4-b16ai8uuR10hQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ1MjQzNjU1LCJleHAiOjE3NDU1ODkyNTV9.8JmnMg_HJvS_ATdm4wfMj6wiXgH20ZYe3zzCjEePv_nN01qJTtEd_cAiRtNvb188Yl_6AvaGj_LfRSIfGxvyGA
 
 {
   "username": "codeuz91@gmail.com"
+}
+
+
+### profile update confirm
+POST http://localhost:8080/api/v1/profile/update/confirm
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ1MjQzNjU1LCJleHAiOjE3NDU1ODkyNTV9.8JmnMg_HJvS_ATdm4wfMj6wiXgH20ZYe3zzCjEePv_nN01qJTtEd_cAiRtNvb188Yl_6AvaGj_LfRSIfGxvyGA
+
+{
+  "code": "76386"
 }

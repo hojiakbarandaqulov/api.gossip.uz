@@ -22,4 +22,5 @@ public interface ProfileRoleRepository extends CrudRepository<ProfileRoleEntity,
 
     @NotNull
     Optional<ProfileRoleEntity> findById(@NotNull Integer id);
+
 }

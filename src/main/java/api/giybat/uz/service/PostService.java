@@ -33,6 +33,4 @@ public class PostService {
         PostDTO postDto = mapper.toPostDto(postEntity);
         return postDto;
     }
-
-
 }

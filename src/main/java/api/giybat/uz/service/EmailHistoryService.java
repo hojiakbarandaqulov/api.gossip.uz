@@ -35,24 +35,21 @@ public class EmailHistoryService {
 
     public void check(String email, String code, AppLanguage language){
         Optional<EmailHistoryEntity> optional = emailHistoryRepository.findTop1ByEmailOrderByCreatedDateDesc(email);
-
         if(optional.isEmpty()){
-           throw  new AppBadException(bundleService.getMessage("verification.failed",language));
+           throw new AppBadException(bundleService.getMessage("verification.failed",language));
         }
         EmailHistoryEntity entity = optional.get();
-
         if (entity.getAttemptCount()>=3){
-            throw  new AppBadException(bundleService.getMessage("verification.failed",language));
+            throw new AppBadException(bundleService.getMessage("verification.failed",language));
         }
-
         if (!entity.getCode().equals(code)){
             emailHistoryRepository.updateAttemptCount(entity.getId());
-            throw  new AppBadException(bundleService.getMessage("verification.failed",language));
+            throw new AppBadException(bundleService.getMessage("verification.failed",language));
         }
 
         LocalDateTime expDate=entity.getCreatedDate().plusMinutes(2);
         if (LocalDateTime.now().isAfter(expDate)){
-            throw  new AppBadException(bundleService.getMessage("verification.failed",language));
+            throw new AppBadException(bundleService.getMessage("verification.failed",language));
         }
     }
 }
