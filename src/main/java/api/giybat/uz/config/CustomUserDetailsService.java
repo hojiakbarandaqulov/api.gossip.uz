@@ -15,7 +15,6 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
     private final ProfileRepository profileRepository;
     private final ProfileRoleRepository profileRoleRepository;
 

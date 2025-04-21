@@ -12,8 +12,10 @@ public class RegistrationDTO {
 
     @NotBlank(message = "name required")
     private String name;
+
     @NotBlank(message = "username required")
     private String username;
+
     @NotBlank(message = "password required")
     private String password;
 

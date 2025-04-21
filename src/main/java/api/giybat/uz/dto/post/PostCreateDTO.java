@@ -12,8 +12,10 @@ public class PostCreateDTO {
     @NotBlank(message = "Title required")
     @Length(min=5,max=255,message = "min-5 , max-255")
     private String title;
+
     @NotBlank(message = "Content required")
     private String content;
+
     @NotBlank(message = "Photo required")
     private AttachCreateDTO photo;
 }
