@@ -44,5 +44,4 @@ public class ExceptionHandleController extends ResponseEntityExceptionHandler {
         e.printStackTrace();
         return ResponseEntity.internalServerError().body(e.getMessage());
     }
-
 }
