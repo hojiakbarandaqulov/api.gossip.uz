@@ -14,7 +14,7 @@ GET http://localhost:8080/api/v1/auth/registration/verification/3
 Authorization:BearerToken eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQzOTIwNDI3LCJleHAiOjE3NDQyNjYwMjd9.TMnaRVEf7JBs-SpN-rJmSTW1rpL3y-6wgIOxO7ECanPjqMd5AFEZiEigWG1v4HnnYSonwNJuqGQ4cG6TxLTkTg
 
 ### Login
-POST http://localhost:8080/api/v1/auth/registration/login
+POST http://localhost:8085/api/v1/auth/registration/login
 Content-Type: application/json
 
 {
