@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+
 @AllArgsConstructor
 @Slf4j
 @Service
@@ -61,7 +62,7 @@ public class AuthService {
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
         emailSendingService.sendRegistrationEmail(dto.getUsername(), entity.getId(), language);
-        return new  ApiResponse<>(messagesService.getMessage("registration.successful", language));
+        return new ApiResponse<>(messagesService.getMessage("registration.successful", language));
     }
 
     public ApiResponse<String> regVerification(String token, AppLanguage language) {
@@ -119,9 +120,9 @@ public class AuthService {
         if (!profile.getStatus().equals(GeneralStatus.ACTIVE)) {
             throw new AppBadException(messagesService.getMessage("wrong.status", language));
         }
-        if (PhoneUtil.isPhone(dto.getUsername())){
+        if (PhoneUtil.isPhone(dto.getUsername())) {
             smsService.sendSms(dto.getUsername());
-        } else if (EmailUtil.isEmail(dto.getUsername()) ){
+        } else if (EmailUtil.isEmail(dto.getUsername())) {
             emailSendingService.sentResetPasswordEmail(dto.getUsername(), language);
         }
         profileRepository.updatePassword(profile.getId(), bCryptPasswordEncoder.encode(dto.getPassword()));

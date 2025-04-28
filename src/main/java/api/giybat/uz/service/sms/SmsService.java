@@ -18,11 +18,10 @@ public class SmsService {
     @Value("${my.eskiz.uz.password}")
     private String myEskizUzPassword;
 
-    public String sendSms(String phone) {
+    public void sendSms(String phone) {
 //        String code = RandomUtil.getRandomSmsCode();
         String message = "This is test from Eskiz";
         send(phone, message);
-        return null;
     }
 
     private void send(String phone, String message) {

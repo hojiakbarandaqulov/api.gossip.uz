@@ -80,7 +80,7 @@ public class ProfileService {
     public ApiResponse<String> updateUsernameConfirm(CodeConfirmDTO dto, AppLanguage language) {
         Integer profileId = SpringSecurityUtil.getProfileId();
         ProfileEntity profile = getById(profileId);
-        String tempUsername = profile.getUsername();
+        String tempUsername = profile.getTempUsername();
         if (PhoneUtil.isPhone(tempUsername)) {
             smsHistoryService.checkSmsCode(tempUsername, dto.getCode(), language);
         } else if (EmailUtil.isEmail(tempUsername)) {

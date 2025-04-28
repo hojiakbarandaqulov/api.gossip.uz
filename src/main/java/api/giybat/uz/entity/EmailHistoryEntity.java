@@ -13,12 +13,11 @@ public class EmailHistoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(name = "code")
+    private String code;
 
     @Column(name = "email")
     private String email;
-
-    @Column(name = "code")
-    private String code;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
@@ -26,6 +25,6 @@ public class EmailHistoryEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "email_type")
     private SmsType emailType;
-    @Column(name = "attemp_count")
+    @Column(name = "attempt_count")
     private Integer attemptCount;
 }

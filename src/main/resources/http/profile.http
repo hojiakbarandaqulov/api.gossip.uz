@@ -19,19 +19,20 @@ Content-Type: application/json
 ### username updated
 PUT http://localhost:8080/api/v1/profile/update/username
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ1MjQzNjU1LCJleHAiOjE3NDU1ODkyNTV9.8JmnMg_HJvS_ATdm4wfMj6wiXgH20ZYe3zzCjEePv_nN01qJTtEd_cAiRtNvb188Yl_6AvaGj_LfRSIfGxvyGA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ1NjgyMDcwLCJleHAiOjE3NDYwMjc2NzB9.AWSvsmdY6uhIDqlsWt1iUjGZFektBMNWOIo397L9UC0LQ_dXqRw7WA3ykV1Cm2CkO51Rqq2fEIWGWbYhbXS39w
 
 {
-  "username": "codeuz91@gmail.com"
+  "username": "codeuz91@gmail.com",
+  "confirmCode": "1234"
 }
 
 ### profile update confirm
 POST http://localhost:8080/api/v1/profile/update/confirm
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ1MjQzNjU1LCJleHAiOjE3NDU1ODkyNTV9.8JmnMg_HJvS_ATdm4wfMj6wiXgH20ZYe3zzCjEePv_nN01qJTtEd_cAiRtNvb188Yl_6AvaGj_LfRSIfGxvyGA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ1NjgyMDcwLCJleHAiOjE3NDYwMjc2NzB9.AWSvsmdY6uhIDqlsWt1iUjGZFektBMNWOIo397L9UC0LQ_dXqRw7WA3ykV1Cm2CkO51Rqq2fEIWGWbYhbXS39w
 
 {
-  "code": "76386"
+  "code": " 26124"
 }
 
 

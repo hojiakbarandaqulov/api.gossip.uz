@@ -19,7 +19,6 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class SmsHistoryService {
-
     private final SmsHistoryRepository smsHistoryRepository;
     private final ResourceBundleMessageSource resourceBundleMessageSource;
 
@@ -83,7 +82,7 @@ public class SmsHistoryService {
          sendMessage(phone, text, smsCode);
      }*/
 
-    public String crete(String toPhone, String text) {
+    public String create(String toPhone, String text) {
         SmsHistoryEntity smsHistoryEntity = new SmsHistoryEntity();
         smsHistoryEntity.setPhone(toPhone);
         smsHistoryEntity.setCode(text);
