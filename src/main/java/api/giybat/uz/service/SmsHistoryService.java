@@ -81,7 +81,6 @@ public class SmsHistoryService {
          String text = "<#>interview.uz partali. Ro'yxatdan o'tish uchun tasdiqlash kodi: " + smsCode + "\n" + signature;
          sendMessage(phone, text, smsCode);
      }*/
-
     public String create(String toPhone, String text) {
         SmsHistoryEntity smsHistoryEntity = new SmsHistoryEntity();
         smsHistoryEntity.setPhone(toPhone);
