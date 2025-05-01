@@ -1,5 +1,7 @@
 package api.giybat.uz.service;
 
+import api.giybat.uz.dto.ApiResponse;
+import api.giybat.uz.dto.post.PostAdminFilterDTO;
 import api.giybat.uz.dto.post.PostCreateDTO;
 import api.giybat.uz.dto.post.PostDTO;
 import api.giybat.uz.entity.PostEntity;
@@ -10,6 +12,7 @@ import org.apache.catalina.mapper.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -21,7 +24,7 @@ public class PostService {
         this.mapper = mapper;
     }
 
-    public PostDTO create(PostCreateDTO dto) {
+    public ApiResponse<PostDTO> create(PostCreateDTO dto) {
         PostEntity postEntity = new PostEntity();
         postEntity.setTitle(dto.getTitle());
         postEntity.setContent(dto.getContent());
@@ -31,6 +34,10 @@ public class PostService {
         postEntity.setProfileId(SpringSecurityUtil.getProfileId());
         postRepository.save(postEntity);
         PostDTO postDto = mapper.toPostDto(postEntity);
-        return postDto;
+        return ApiResponse.ok(postDto);
+    }
+
+    public List<PostDTO> adminFilter(PostAdminFilterDTO dto) {
+
     }
 }

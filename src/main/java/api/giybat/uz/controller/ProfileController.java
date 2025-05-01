@@ -50,5 +50,4 @@ public class ProfileController {
         ApiResponse<String> apiResponse = profileService.updateUsernameConfirm(dto, language);
         return ResponseEntity.ok(apiResponse);
     }
-
 }

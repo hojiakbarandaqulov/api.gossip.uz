@@ -12,5 +12,4 @@ public class PostDTO {
     private String content;
     private AttachDTO photo;
     private LocalDateTime createdDate;
-    private Boolean visible;
 }

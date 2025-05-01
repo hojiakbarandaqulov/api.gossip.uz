@@ -30,7 +30,7 @@ public class ApiResponse<T> {
         this.message = message;
     }
 
-    public static <T> ApiResponse<T> ok(T data, AppLanguage language) {
+    public static <T> ApiResponse<T> ok(T data) {
         return new ApiResponse<>(data);
     }
 
