@@ -2,6 +2,8 @@ package api.giybat.uz.service;
 
 import api.giybat.uz.dto.ApiResponse;
 import api.giybat.uz.dto.confirm.CodeConfirmDTO;
+import api.giybat.uz.dto.post.PostAdminFilterDTO;
+import api.giybat.uz.dto.post.PostDTO;
 import api.giybat.uz.dto.profile.ProfileUpdateDetailDTO;
 import api.giybat.uz.dto.profile.ProfileUpdatePasswordDTO;
 import api.giybat.uz.dto.profile.ProfileUpdateUsernameDTO;
@@ -96,4 +98,7 @@ public class ProfileService {
         return profileRepository.findByIdAndVisibleTrue(id).orElseThrow(() -> new AppBadException("Profile not found"));
     }
 
+    public List<PostDTO> adminFilter(PostAdminFilterDTO filterDTO) {
+
+    }
 }

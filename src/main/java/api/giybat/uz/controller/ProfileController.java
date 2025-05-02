@@ -3,6 +3,9 @@ package api.giybat.uz.controller;
 import api.giybat.uz.dto.ApiResponse;
 import api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.dto.confirm.CodeConfirmDTO;
+import api.giybat.uz.dto.post.PostAdminFilterDTO;
+import api.giybat.uz.dto.post.PostDTO;
+import api.giybat.uz.dto.profile.ProfileAdminFilterDTO;
 import api.giybat.uz.dto.profile.ProfileUpdateDetailDTO;
 import api.giybat.uz.dto.profile.ProfileUpdatePasswordDTO;
 import api.giybat.uz.dto.profile.ProfileUpdateUsernameDTO;
@@ -10,8 +13,12 @@ import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.service.ProfileService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/profile")
@@ -49,5 +56,14 @@ public class ProfileController {
                                                               @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language) {
         ApiResponse<String> apiResponse = profileService.updateUsernameConfirm(dto, language);
         return ResponseEntity.ok(apiResponse);
+    }
+
+    @PostMapping("/filter")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<PostDTO>> filter(@RequestBody ProfileAdminFilterDTO filterDTO,
+                                                @RequestParam(value = "page",defaultValue = "1") Integer page,
+                                                @RequestParam(value = "size",defaultValue = "10") Integer size){
+        List<PostDTO> postResponse = profileService.adminFilter(filterDTO);
+        return ResponseEntity.ok(postResponse);
     }
 }

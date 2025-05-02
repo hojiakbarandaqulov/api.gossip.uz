@@ -30,7 +30,7 @@ public class PostController {
     }
 
 
-    @PostMapping("/filter")
+   /* @PostMapping("/filter")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<PostDTO>> filter(@Valid @RequestBody PostFilterDTO filterDTO){
 
@@ -43,5 +43,6 @@ public class PostController {
                                                 @RequestParam(value = "size",defaultValue = "10") Integer size){
         List<PostDTO> postResponse = postService.adminFilter(filterDTO);
         return ResponseEntity.ok(postResponse);
-    }
+    }*/
+
 }

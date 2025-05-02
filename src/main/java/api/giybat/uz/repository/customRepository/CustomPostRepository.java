@@ -1,5 +1,6 @@
-package api.giybat.uz.repository;
+package api.giybat.uz.repository.customRepository;
 
+import api.giybat.uz.dto.post.PostFilterDTO;
 import jakarta.persistence.EntityManager;
 
 public class CustomPostRepository {
@@ -9,5 +10,4 @@ public class CustomPostRepository {
         this.entityManager = entityManager;
     }
 
-    public Filter
 }
