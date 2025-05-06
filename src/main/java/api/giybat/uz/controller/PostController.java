@@ -30,13 +30,13 @@ public class PostController {
     }
 
 
-   /* @PostMapping("/filter")
+    @PostMapping("/filter")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<PostDTO>> filter(@Valid @RequestBody PostFilterDTO filterDTO){
-
+      ApiResponse<List<PostDTO>>response=  postService.filter(filterDTO);
     }
 
-    @PostMapping("/filter")
+    /*@PostMapping("/filter")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<PostDTO>> filter(@RequestBody PostAdminFilterDTO filterDTO,
                                                 @RequestParam(value = "page",defaultValue = "1") Integer page,
