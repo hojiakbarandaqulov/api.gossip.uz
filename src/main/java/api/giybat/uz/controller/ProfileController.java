@@ -59,7 +59,7 @@ public class ProfileController {
     public ResponseEntity<List<PostDTO>> filter(@RequestBody ProfileAdminFilterDTO filterDTO,
                                                 @RequestParam(value = "page",defaultValue = "1") Integer page,
                                                 @RequestParam(value = "size",defaultValue = "10") Integer size){
-        List<PostDTO> postResponse = profileService.adminFilter(filterDTO,page-1,size);
+        List<PostDTO> postResponse = (List<PostDTO>) profileService.adminFilter(filterDTO,page-1,size);
         return ResponseEntity.ok(postResponse);
     }
 }
