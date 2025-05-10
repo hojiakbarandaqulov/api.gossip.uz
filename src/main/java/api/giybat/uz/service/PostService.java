@@ -44,7 +44,7 @@ public class PostService {
 
     public ApiResponse<List<PostDTO>> filter(PostFilterDTO filterDTO, int page, int size) {
         FilterResultDTO<PostEntity> filter = customPostRepository.filter(filterDTO, page, size);
-        
+
     }
 
     /*public List<PostDTO> adminFilter(PostAdminFilterDTO dto) {

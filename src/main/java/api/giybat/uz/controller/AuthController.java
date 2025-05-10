@@ -2,14 +2,13 @@ package api.giybat.uz.controller;
 
 import api.giybat.uz.dto.ApiResponse;
 import api.giybat.uz.dto.LoginDTO;
-import api.giybat.uz.dto.ProfileDTO;
+import api.giybat.uz.dto.profile.ProfileDTO;
 import api.giybat.uz.dto.auth.RegistrationDTO;
 import api.giybat.uz.dto.auth.ResetPasswordConfirmDTO;
 import api.giybat.uz.dto.auth.ResetPasswordDTO;
 import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.service.AuthService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

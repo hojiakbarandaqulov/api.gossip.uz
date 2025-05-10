@@ -1,11 +1,9 @@
-package api.giybat.uz.dto;
+package api.giybat.uz.dto.profile;
 
-import api.giybat.uz.enums.GeneralStatus;
 import api.giybat.uz.enums.ProfileRole;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter

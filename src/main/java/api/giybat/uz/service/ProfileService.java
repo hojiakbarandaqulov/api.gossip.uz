@@ -1,6 +1,7 @@
 package api.giybat.uz.service;
 
 import api.giybat.uz.dto.ApiResponse;
+import api.giybat.uz.dto.FilterResultDTO;
 import api.giybat.uz.dto.confirm.CodeConfirmDTO;
 import api.giybat.uz.dto.post.PostAdminFilterDTO;
 import api.giybat.uz.dto.post.PostDTO;
@@ -14,39 +15,35 @@ import api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.repository.ProfileRepository;
 import api.giybat.uz.repository.ProfileRoleRepository;
+import api.giybat.uz.repository.customRepository.CustomProfileRepository;
 import api.giybat.uz.service.sms.EmailSendingService;
 import api.giybat.uz.service.sms.SmsService;
 import api.giybat.uz.util.EmailUtil;
 import api.giybat.uz.util.JwtUtil;
 import api.giybat.uz.util.PhoneUtil;
 import api.giybat.uz.util.SpringSecurityUtil;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ProfileRoleRepository profileRoleRepository;
+    private final CustomProfileRepository customProfileRepository;
     private final SmsService smsService;
     private final ResourceBundleService bundleService;
     private final EmailSendingService emailSendingService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final EmailHistoryService emailHistoryService;
     private final SmsHistoryService smsHistoryService;
-
-    public ProfileService(ProfileRepository profileRepository, ProfileRoleRepository profileRoleRepository, SmsService smsService, ResourceBundleService bundleService, EmailSendingService emailSendingService, BCryptPasswordEncoder bCryptPasswordEncoder, EmailHistoryService emailHistoryService, SmsHistoryService smsHistoryService) {
-        this.profileRepository = profileRepository;
-        this.profileRoleRepository = profileRoleRepository;
-        this.smsService = smsService;
-        this.bundleService = bundleService;
-        this.emailSendingService = emailSendingService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.emailHistoryService = emailHistoryService;
-        this.smsHistoryService = smsHistoryService;
-    }
 
     public ApiResponse<String> updateDetail(ProfileUpdateDetailDTO updateDetailDTO,
                                             AppLanguage language) {
@@ -99,7 +96,9 @@ public class ProfileService {
         return profileRepository.findByIdAndVisibleTrue(id).orElseThrow(() -> new AppBadException("Profile not found"));
     }
 
-    public List<PostDTO> adminFilter(ProfileAdminFilterDTO filterDTO, Integer page, Integer size) {
+    public ApiResponse<PageImpl<PostDTO>> adminFilter(ProfileAdminFilterDTO filterDTO, Integer page, Integer size) {
+        Pageable pageable = (Pageable) PageRequest.of(page,size);
+        FilterResultDTO<ProfileEntity>filterResultDTO=customProfileRepository.filterPagination(filterDTO,page,size);
 
         return  null;
     }

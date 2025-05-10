@@ -4,6 +4,7 @@ import api.giybat.uz.dto.*;
 import api.giybat.uz.dto.auth.RegistrationDTO;
 import api.giybat.uz.dto.auth.ResetPasswordConfirmDTO;
 import api.giybat.uz.dto.auth.ResetPasswordDTO;
+import api.giybat.uz.dto.profile.ProfileDTO;
 import api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.enums.GeneralStatus;
