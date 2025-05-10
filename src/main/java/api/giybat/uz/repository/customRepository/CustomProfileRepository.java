@@ -9,12 +9,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CustomProfileRepository {
     private EntityManager entityManager;
+
     public CustomProfileRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     public FilterResultDTO<ProfileEntity> filterPagination(ProfileAdminFilterDTO profileAdminFilterDTO,
                                                            Integer page, Integer size) {
-
+        return null;
     }
 }
