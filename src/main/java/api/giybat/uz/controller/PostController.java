@@ -8,6 +8,7 @@ import api.giybat.uz.dto.post.PostFilterDTO;
 import api.giybat.uz.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +25,18 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<PostDTO>> create(@RequestBody PostCreateDTO post){
-       ApiResponse<PostDTO> response = postService.create(post);
+    public ResponseEntity<ApiResponse<PostDTO>> create(@RequestBody PostCreateDTO post) {
+        ApiResponse<PostDTO> response = postService.create(post);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/profile")
+    public ResponseEntity<ApiResponse<PageImpl<PostDTO>>> postProfile(@RequestParam(value = "page", defaultValue = "1") int page,
+                                                                      @RequestParam(value = "size", defaultValue = "10") int size) {
+        ApiResponse<PageImpl<PostDTO>> response = postService.postProfile(page - 1, size);
+        return ResponseEntity.ok(response);
+    }
+
 
 
    /* @PostMapping("/filter")

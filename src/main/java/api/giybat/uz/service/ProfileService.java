@@ -65,7 +65,7 @@ public class ProfileService {
     public ApiResponse<String> updateUsername(ProfileUpdateUsernameDTO profileDTO, AppLanguage language) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(profileDTO.getUsername());
         if (optional.isPresent()) {
-            return new ApiResponse<>(bundleService.getMessage("email.phone.exists", language));
+            throw new AppBadException(bundleService.getMessage("email.phone.exists", language));
         }
         if (PhoneUtil.isPhone(profileDTO.getUsername())) {
             smsService.sendSms(profileDTO.getUsername());

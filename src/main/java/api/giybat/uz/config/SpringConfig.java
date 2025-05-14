@@ -61,6 +61,7 @@ public class SpringConfig {
                     .requestMatchers("/api/v1/auth/**").permitAll()
                     .requestMatchers("/api/v1/attach/**").permitAll()
                     .requestMatchers("/api/v1/profile/detail/**").permitAll()
+                    .requestMatchers("/api/v1/post/profile").hasAnyRole("ADMIN","USER")
                     .anyRequest()
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -12,9 +12,15 @@ import api.giybat.uz.repository.PostRepository;
 import api.giybat.uz.repository.customRepository.CustomPostRepository;
 import api.giybat.uz.util.SpringSecurityUtil;
 import org.apache.catalina.mapper.Mapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -40,6 +46,19 @@ public class PostService {
         postRepository.save(postEntity);
         PostDTO postDto = mapper.toPostDto(postEntity);
         return ApiResponse.ok(postDto);
+    }
+
+    public ApiResponse<PageImpl<PostDTO>> postProfile(int page, int size) {
+        PageRequest pageable= PageRequest.of(page,size, Sort.by("createdDate").descending());
+        Page<PostEntity> postObj = postRepository.findAll(pageable);
+        List<PostDTO> postDTO=new LinkedList<>();
+        for (PostEntity postEntity : postObj) {
+            PostDTO postDto = mapper.toPostDto(postEntity);
+            postDTO.add(postDto);
+        }
+        Long totalElements = postObj.getTotalElements();
+        return new ApiResponse<>(new PageImpl<>(postDTO,pageable,totalElements));
+
     }
 
     public ApiResponse<List<PostDTO>> filter(PostFilterDTO filterDTO, int page, int size) {
