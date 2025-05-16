@@ -75,6 +75,7 @@ public class AuthService {
                 return new ApiResponse<>(messagesService.getMessage("verification.successful", language));
             }
         } catch (JwtException e) {
+            throw new RuntimeException(e);
         }
         throw new AppBadException(messagesService.getMessage("verification.wrong", language));
     }
