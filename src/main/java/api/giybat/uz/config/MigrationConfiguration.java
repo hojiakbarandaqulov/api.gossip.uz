@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-@Configurable
+@Configuration
 public class MigrationConfiguration {
     @Value("${spring.datasource.url}")
     private String dataSourceUrl;
@@ -19,7 +19,7 @@ public class MigrationConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
+        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url(dataSourceUrl);
         dataSourceBuilder.username(dataSourceUsername);
         dataSourceBuilder.password(dataSourcePassword);
