@@ -15,5 +15,4 @@ class ApplicationTests {
 	void contextLoads() {
 		System.out.println(bCryptPasswordEncoder.encode("123456"));
 	}
-
 }

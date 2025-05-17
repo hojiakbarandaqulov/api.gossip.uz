@@ -17,8 +17,8 @@ POST http://localhost:8080/api/v1/auth/registration/login
 Content-Type: application/json
 
 {
-  "username": "codeuz91@gmail.com",
-  "password": "1234"
+  "username": "andaqulovxojiakbar@gmail.com",
+  "password": "123456"
 }
 
 ### reset password
