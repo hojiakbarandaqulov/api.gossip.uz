@@ -1,5 +1,4 @@
-create
-extension if not exists "uuid-ossp";
+create extension if not exists "uuid-ossp";
 
 insert into profile(name, username, password, status, visible, created_date)
 values ('admin',
