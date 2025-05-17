@@ -25,7 +25,6 @@ import java.util.*;
 public class AttachService {
     @Value("${server.url}")
     private String serverUrl;
-
     @Value("${attach.upload.url}")
     public String attachUrl;
 

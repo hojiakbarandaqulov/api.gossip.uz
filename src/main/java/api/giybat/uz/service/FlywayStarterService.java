@@ -9,8 +9,11 @@ import javax.sql.DataSource;
 
 @Service
 public class FlywayStarterService implements CommandLineRunner {
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
+
+    public FlywayStarterService(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public void run(String... args) throws Exception {
