@@ -26,6 +26,9 @@ public class AttachEntity {
     @Column(name = "path")
     private String path;
 
+    @Column(name = "visible")
+    private Boolean visible = true;
+
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 

@@ -91,6 +91,17 @@ public class AttachService {
         return new byte[0];
     }
 
+    public boolean delete(String id){
+        AttachEntity entity = get(id);
+        attachRepository.delete(id);
+        File file=new File(attachUrl + "/" + entity.getPath() + "/" + entity.getId());
+        boolean b=false;
+        if(file.exists()){
+            b=file.delete();
+        }
+        return b;
+    }
+
     private AttachEntity get(String attachId) {
         return attachRepository.findById(attachId).orElseThrow(() -> {
             throw new AppBadException("Attach not found");

@@ -3,12 +3,8 @@ package api.giybat.uz.service;
 import api.giybat.uz.dto.ApiResponse;
 import api.giybat.uz.dto.FilterResultDTO;
 import api.giybat.uz.dto.confirm.CodeConfirmDTO;
-import api.giybat.uz.dto.post.PostAdminFilterDTO;
 import api.giybat.uz.dto.post.PostDTO;
-import api.giybat.uz.dto.profile.ProfileAdminFilterDTO;
-import api.giybat.uz.dto.profile.ProfileUpdateDetailDTO;
-import api.giybat.uz.dto.profile.ProfileUpdatePasswordDTO;
-import api.giybat.uz.dto.profile.ProfileUpdateUsernameDTO;
+import api.giybat.uz.dto.profile.*;
 import api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.enums.ProfileRole;
@@ -22,6 +18,7 @@ import api.giybat.uz.util.EmailUtil;
 import api.giybat.uz.util.JwtUtil;
 import api.giybat.uz.util.PhoneUtil;
 import api.giybat.uz.util.SpringSecurityUtil;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -44,6 +41,7 @@ public class ProfileService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final EmailHistoryService emailHistoryService;
     private final SmsHistoryService smsHistoryService;
+    private final AttachService attachService;
 
     public ApiResponse<String> updateDetail(ProfileUpdateDetailDTO updateDetailDTO,
                                             AppLanguage language) {
@@ -90,6 +88,16 @@ public class ProfileService {
         List<ProfileRole> roles = profileRoleRepository.getAllRolesListByProfileId(profile.getId());
         String jwt = JwtUtil.encode(tempUsername, profile.getId(), roles);
         return new ApiResponse<>(jwt, bundleService.getMessage("change.username.success", language));
+    }
+
+    public ApiResponse<String> updatePhoto(String photoId, AppLanguage language) {
+        Integer profileId = SpringSecurityUtil.getProfileId();
+        profileRepository.updatePhoto(profileId,photoId);
+        ProfileEntity profile=getById(profileId);
+        if (profile.getPhotoId()!=null && profile.getPhotoId().equals(photoId)){
+            attachService.delete(profile.getPhotoId());
+        }
+        return new ApiResponse<>(bundleService.getMessage("photo.photo.update.success", language));
     }
 
     public ProfileEntity getById(Integer id) {
