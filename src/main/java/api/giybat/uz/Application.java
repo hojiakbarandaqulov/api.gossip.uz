@@ -10,8 +10,8 @@ import java.util.UUID;
 public class Application {
     public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-//		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-//		System.out.println(bCryptPasswordEncoder.encode("1234"));
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		System.out.println(bCryptPasswordEncoder.encode("1234"));
 
 	}
 }
