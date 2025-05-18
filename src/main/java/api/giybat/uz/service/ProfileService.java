@@ -56,7 +56,7 @@ public class ProfileService {
         if (bCryptPasswordEncoder.matches(profileDTO.getCurrentPassword(), profile.getPassword())) {
             throw new AppBadException(bundleService.getMessage("wrong.password", language));
         }
-        profileRepository.updatePassword(profileId, profileDTO.getCurrentPassword());
+        profileRepository.updatePassword(profileId, bCryptPasswordEncoder.encode(profileDTO.getNewPassword()));
         return new ApiResponse<>(bundleService.getMessage("profile.password.update.success", language));
     }
 

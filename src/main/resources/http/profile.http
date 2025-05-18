@@ -37,3 +37,13 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1Q
 }
 
 
+###
+PUT http://localhost:8080/api/v1/profile/photo
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRhcXVsb3Z4b2ppYWtiYXJAZ21haWwuY29tIiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTiIsImlkIjoiMSIsImlhdCI6MTc0NzU4MTA5NywiZXhwIjoxNzQ3OTI2Njk3fQ.on45wZUrGHN7XpfGBOEFo1j2-KEUZ-D6uUWk3DV9LQFvRJ6wAN-Mo9-Eug9mZvzpkJBkOSL4CwCOKZKVoAnysg
+
+{
+  "photoId": "fd0994da-ef98-49e2-86b7-67292cd82c0c.jpg"
+}
+
+

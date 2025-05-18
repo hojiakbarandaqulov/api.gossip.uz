@@ -11,5 +11,5 @@ public interface AttachRepository extends JpaRepository<AttachEntity, String> {
     @Transactional
     @Modifying
     @Query("update  AttachEntity  set visible= false where  id=?1")
-    boolean delete(String id);
+    void delete(String id);
 }

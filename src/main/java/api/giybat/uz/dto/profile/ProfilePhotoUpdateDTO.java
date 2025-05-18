@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class ProfilePhotoUpdateDTO {
     @NotNull(message = "PhotoId required")
-    private String PhotoId;
+    private String photoId;
 }
