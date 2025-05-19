@@ -38,6 +38,7 @@ public class AuthService {
     private final ProfileRoleService profileRoleService;
     private final ResourceBundleService messagesService;
     private final SmsService smsService;
+    private final AttachService attachService;
 
 
     public ApiResponse<String> registration(RegistrationDTO dto, AppLanguage language) {
@@ -97,6 +98,7 @@ public class AuthService {
         response.setUsername(profile.getUsername());
         response.setRole(profileRoleRepository.getAllRolesListByProfileId(profile.getId()));
         response.setJwt(JwtUtil.encode(profile.getUsername(), profile.getId(), response.getRole()));
+        response.setPhoto(attachService.attachDTO(profile.getPhotoId()));
         return new ApiResponse<>(response);
     }
 

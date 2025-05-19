@@ -133,5 +133,16 @@ public class AttachService {
         return dto;
     }
 
+    public AttachDTO attachDTO(String photoId) {
+        if (photoId == null) return null;
+        AttachDTO attachDTO=new AttachDTO();
+        attachDTO.setId(photoId);
+        attachDTO.setUrl(openUrl(photoId));
+        return attachDTO;
+    }
+
+    private String openUrl(String fileName) {
+        return attachUrl + "/"+fileName;
+    }
 }
 

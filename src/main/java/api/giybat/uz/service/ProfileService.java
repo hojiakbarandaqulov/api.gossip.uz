@@ -92,11 +92,11 @@ public class ProfileService {
 
     public ApiResponse<String> updatePhoto(String photoId, AppLanguage language) {
         Integer profileId = SpringSecurityUtil.getProfileId();
-        profileRepository.updatePhoto(profileId,photoId);
         ProfileEntity profile=getById(profileId);
         if (profile.getPhotoId()!=null && profile.getPhotoId().equals(photoId)){
             attachService.delete(profile.getPhotoId());
         }
+        profileRepository.updatePhoto(profileId,photoId);
         return new ApiResponse<>(bundleService.getMessage("photo.photo.update.success", language));
     }
 
