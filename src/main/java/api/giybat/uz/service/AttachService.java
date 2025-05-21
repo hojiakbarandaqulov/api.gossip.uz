@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -78,17 +81,20 @@ public class AttachService {
     }
 
     public byte[] open_general(String attachId) {
-        byte[] data;
+        AttachEntity entity = getEntity(attachId);
         try {
-            AttachEntity entity = get(attachId);
-            String path = entity.getPath() + "/" + attachId;
-            Path file = Paths.get("uploads/" + path);
-            data = Files.readAllBytes(file);
-            return data;
-        } catch (IOException e) {
-            e.printStackTrace();
+            BufferedImage originalImage = ImageIO.read(new File(getPath(entity)));
+            ByteArrayOutputStream boas = new ByteArrayOutputStream();
+            ImageIO.write(originalImage, getTempExtension(entity.getExtension()), boas);
+//            ImageIO.write(originalImage, entity.getExtension(), boas);
+            boas.flush();
+            byte[] imageInByte = boas.toByteArray();
+            boas.close();
+            return imageInByte;
+        } catch (Exception e) {
+            log.warn("Attach error : {}", e.getMessage());
+            return new byte[0];
         }
-        return new byte[0];
     }
 
     public boolean delete(String id){
@@ -141,8 +147,26 @@ public class AttachService {
         return attachDTO;
     }
 
+    public AttachEntity getEntity(String id) {
+        Optional<AttachEntity> optional = attachRepository.findById(id);
+        if (optional.isEmpty()) {
+            log.warn("Attach error : file not found");
+            throw new AppBadException("File not found");
+        }
+        return optional.get();
+    }
+
+    public String getTempExtension(String extension) {
+        String extSml = extension.toLowerCase();
+        return extSml.equals("jpg") || extSml.equals("png") ? "png" : extension;
+    }
+
     private String openUrl(String fileName) {
         return attachUrl + "/"+fileName;
     }
+    private String getPath(AttachEntity entity) {
+        return  attachUrl + "/" + entity.getPath() + "/" + entity.getId() + "." + entity.getExtension();
+    }
+
 }
 
