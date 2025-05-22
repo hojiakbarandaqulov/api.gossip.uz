@@ -53,7 +53,7 @@ public class ProfileService {
     public ApiResponse<String> updatePassword(ProfileUpdatePasswordDTO profileDTO, AppLanguage language) {
         Integer profileId = SpringSecurityUtil.getProfileId();
         ProfileEntity profile = getById(profileId);
-        if (bCryptPasswordEncoder.matches(profileDTO.getCurrentPassword(), profile.getPassword())) {
+        if (bCryptPasswordEncoder.matches(bCryptPasswordEncoder.encode(profileDTO.getCurrentPassword()), profile.getPassword())) {
             throw new AppBadException(bundleService.getMessage("wrong.password", language));
         }
         profileRepository.updatePassword(profileId, bCryptPasswordEncoder.encode(profileDTO.getNewPassword()));
