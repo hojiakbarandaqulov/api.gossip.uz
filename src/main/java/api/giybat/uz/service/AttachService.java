@@ -140,7 +140,9 @@ public class AttachService {
     }
 
     public AttachDTO attachDTO(String photoId) {
-        if (photoId == null) return null;
+        if (photoId == null){
+            return null;
+        }
         AttachDTO attachDTO=new AttachDTO();
         attachDTO.setId(photoId);
         attachDTO.setUrl(openUrl(photoId));

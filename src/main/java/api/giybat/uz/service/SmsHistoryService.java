@@ -100,7 +100,7 @@ public class SmsHistoryService {
         LocalDateTime to = LocalDateTime.now();
         LocalDateTime from = to.minusMinutes(2);
 
-        long count = smsHistoryRepository.countByPhoneAndCreatedDateBetween(phone, from, to);
+        Long count = smsHistoryRepository.countByPhoneAndCreatedDateBetween(phone, from, to);
         if (count >= 3) {
             throw new AppBadException("Sms limit reached. Please try after some time");
         }
