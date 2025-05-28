@@ -98,6 +98,7 @@ public class AuthService {
         response.setUsername(profile.getUsername());
         response.setRole(profileRoleRepository.getAllRolesListByProfileId(profile.getId()));
         response.setJwt(JwtUtil.encode(profile.getUsername(), profile.getId(), response.getRole()));
+        response.setName(profile.getName());
         response.setPhoto(attachService.attachDTO(profile.getPhotoId()));
         return new ApiResponse<>(response);
     }

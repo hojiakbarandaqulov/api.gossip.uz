@@ -53,7 +53,7 @@ public class ProfileService {
     public ApiResponse<String> updatePassword(ProfileUpdatePasswordDTO profileDTO, AppLanguage language) {
         Integer profileId = SpringSecurityUtil.getProfileId();
         ProfileEntity profile = getById(profileId);
-        if (bCryptPasswordEncoder.matches(bCryptPasswordEncoder.encode(profileDTO.getCurrentPassword()), profile.getPassword())) {
+        if (!bCryptPasswordEncoder.matches(profileDTO.getCurrentPassword(), profile.getPassword())) {
             throw new AppBadException(bundleService.getMessage("wrong.password", language));
         }
         profileRepository.updatePassword(profileId, bCryptPasswordEncoder.encode(profileDTO.getNewPassword()));
@@ -92,11 +92,11 @@ public class ProfileService {
 
     public ApiResponse<String> updatePhoto(String photoId, AppLanguage language) {
         Integer profileId = SpringSecurityUtil.getProfileId();
-        ProfileEntity profile=getById(profileId);
-        if (profile.getPhotoId()!=null && profile.getPhotoId().equals(photoId)){
+        ProfileEntity profile = getById(profileId);
+        if (profile.getPhotoId() != null && profile.getPhotoId().equals(photoId)) {
             attachService.delete(profile.getPhotoId());
         }
-        profileRepository.updatePhoto(profileId,photoId);
+        profileRepository.updatePhoto(profileId, photoId);
         return new ApiResponse<>(bundleService.getMessage("photo.photo.update.success", language));
     }
 
@@ -105,9 +105,9 @@ public class ProfileService {
     }
 
     public ApiResponse<PageImpl<PostDTO>> adminFilter(ProfileAdminFilterDTO filterDTO, Integer page, Integer size) {
-        Pageable pageable = (Pageable) PageRequest.of(page,size);
-        FilterResultDTO<ProfileEntity>filterResultDTO=customProfileRepository.filterPagination(filterDTO,page,size);
+        Pageable pageable = (Pageable) PageRequest.of(page, size);
+        FilterResultDTO<ProfileEntity> filterResultDTO = customProfileRepository.filterPagination(filterDTO, page, size);
 
-        return  null;
+        return null;
     }
 }

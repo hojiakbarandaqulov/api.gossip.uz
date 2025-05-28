@@ -10,7 +10,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1Q
 ###profile password update
 PUT http://localhost:8080/api/v1/profile/update/password
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2RldXo5MUBnbWFpbC5jb20iLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiNSIsImlhdCI6MTc0ODAwNjI3OSwiZXhwIjoxNzQ4MzUxODc5fQ.IaYgIEZuTsqxa9VkemsZWYFkllc98gzbe96n1yi54qmUiXzX8pvt1392DiSPqJnkVQeN7Tvnn2E-oxo3YBNErQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiI1IiwiaWF0IjoxNzQ4MjY5NTIxLCJleHAiOjE3NDg2MTUxMjF9.4R87v84M_OX6_jvAvTbXZFMUovC1q1Yl6lJ3dCIf5rRnciByYN1MkxyGGRV9IFIPBaOX8MURWq0IJf_9FlhCpg
 
 {
   "currentPassword": "1234",
@@ -20,20 +20,19 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2RldXo5MUBnbWFpbC5jb20iL
 ### username updated
 PUT http://localhost:8080/api/v1/profile/update/username
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ1NjgyMDcwLCJleHAiOjE3NDYwMjc2NzB9.AWSvsmdY6uhIDqlsWt1iUjGZFektBMNWOIo397L9UC0LQ_dXqRw7WA3ykV1Cm2CkO51Rqq2fEIWGWbYhbXS39w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiI1IiwiaWF0IjoxNzQ4MDg2ODYzLCJleHAiOjE3NDg0MzI0NjN9.NRMyw4w_NkBKzvzufxvZHCx2F91_ix7NVnngMj265dDbdW7uIalPK1OnkoopTWArRQ2RDpqYDrUB6Stom5GlBg
 
 {
-  "username": "codeuz91@gmail.com",
-  "confirmCode": "1234"
+  "username": "codeuz91@gmail.com"
 }
 
 ### profile update confirm
 POST http://localhost:8080/api/v1/profile/update/confirm
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxIiwiaWF0IjoxNzQ1NjgyMDcwLCJleHAiOjE3NDYwMjc2NzB9.AWSvsmdY6uhIDqlsWt1iUjGZFektBMNWOIo397L9UC0LQ_dXqRw7WA3ykV1Cm2CkO51Rqq2fEIWGWbYhbXS39w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2RldXo5MUBnbWFpbC5jb20iLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiNSIsImlhdCI6MTc0ODA3NzI3MiwiZXhwIjoxNzQ4NDIyODcyfQ.GDsx-zaLHFS4oAKkUAhN0nl70u0f8j2TOiKZ7omVWNCq8fwgT2dRXPFcEOT4L2b3M3hNrec0DOYLqj7OCzKpOw
 
 {
-  "code": "55200"
+  "code": "68702"
 }
 
 ### Update Profile Photo
