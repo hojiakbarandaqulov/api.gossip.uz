@@ -7,11 +7,13 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
@@ -61,7 +63,7 @@ public class SpringConfig {
                     .requestMatchers("/api/v1/auth/**").permitAll()
                     .requestMatchers("/api/v1/attach/**").permitAll()
                     .requestMatchers("/api/v1/profile/detail/**").permitAll()
-                    .requestMatchers("/api/v1/post/profile").hasAnyRole("ADMIN","USER")
+                    .requestMatchers("/api/v1/post/profile").hasAnyRole("ADMIN", "USER")
                     .requestMatchers("/api/v1/profile/photo").permitAll()
                     .requestMatchers("/api/v1/profile/update/confirm").permitAll()
                     .requestMatchers("/api/v1/profile/update/password").permitAll()
@@ -70,17 +72,25 @@ public class SpringConfig {
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.csrf(AbstractHttpConfigurer::disable);
-        http.cors(httpSecurityCorsConfigurer -> {
-            CorsConfiguration configuration = new CorsConfiguration();
-            configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-            configuration.setAllowedMethods(Arrays.asList("*"));
-            configuration.setAllowedHeaders(Arrays.asList("*"));
+        http.csrf(AbstractHttpConfigurer::disable) // CSRF ni faqat REST API uchun o'chirish
+                .cors(cors -> {
+                    CorsConfigurationSource source = request -> {
+                        CorsConfiguration config = new CorsConfiguration();
+                        config.setAllowedOrigins(Arrays.asList(
+                                "http://localhost:3000", // Frontend manzili
+                                "https://production-domain.com"
+                        ));
+                        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                        config.setAllowedHeaders(Arrays.asList("*"));
+                        config.setAllowCredentials(true);
+                        config.setExposedHeaders(Arrays.asList("Authorization"));
+                        config.setMaxAge(3600L);
+                        return config;
+                    };
+                    cors.configurationSource(source);
+                })
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-            source.registerCorsConfiguration("/**", configuration);
-            httpSecurityCorsConfigurer.configurationSource(source);
-        });
         return http.build();
     }
 
