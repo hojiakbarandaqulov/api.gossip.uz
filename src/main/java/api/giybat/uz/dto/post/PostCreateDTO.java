@@ -17,5 +17,5 @@ public class PostCreateDTO {
     private String content;
 
     @NotBlank(message = "Photo required")
-    private AttachCreateDTO photo;
+    private AttachDTO photo;
 }

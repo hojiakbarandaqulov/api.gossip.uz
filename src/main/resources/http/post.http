@@ -1,18 +1,18 @@
 ### Post Create
 POST http://localhost:8080/api/v1/post/create
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2RldXo5MUBnbWFpbC5jb20iLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMSIsImlhdCI6MTc0NjAyNjc5OCwiZXhwIjoxNzQ2MzcyMzk4fQ.FFiMsQHfZIBrJjomVQD7FBrwoHdoyY8GiQEzzb9ZAJBL77HwBLnKJoSQ4g5hdBoagkUbTtM3AVJYNLTD3y6JYw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiI1IiwiaWF0IjoxNzQ4ODc4NTI0LCJleHAiOjE3NDkyMjQxMjR9.54vojSlRvKaJkbNkxXw07lZxmsME-sovQddeKZgCa63lbUFyMNLcDLaTcboSpu9krLcm70r_nOTCpmO-E5BcpQ
 
 {
   "title": "eshshak",
   "content": "eshshaklar mazgilardir",
   "photo": {
-    "id": "8c7a4227-7920-4a62-b6a6-6e8b2d864906.jpg"
+    "id": "bac67b88-d84e-4feb-a0da-38ecb8835908.png"
   }
 }
 
 ### post Profile
 GET http://localhost:8080/api/v1/post/profile?page1&size=5
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2RldXo5MUBnbWFpbC5jb20iLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMSIsImlhdCI6MTc0NzIzMjE2OCwiZXhwIjoxNzQ3NTc3NzY4fQ.G82XfT-1fBIbWVSzP-rBwESlOlwkylWsnl0GCJYyUpdfP74TA_xPjpGPjNEd1LGG_2a4w8DcIr17VyHF1sKx_A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiI1IiwiaWF0IjoxNzQ4ODc4NTI0LCJleHAiOjE3NDkyMjQxMjR9.54vojSlRvKaJkbNkxXw07lZxmsME-sovQddeKZgCa63lbUFyMNLcDLaTcboSpu9krLcm70r_nOTCpmO-E5BcpQ
 
 

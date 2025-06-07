@@ -1,5 +1,6 @@
 package api.giybat.uz.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,15 +21,12 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class SpringConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserDetailsService userDetailsService;
 
-    public SpringConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CustomUserDetailsService customUserDetailsService) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.userDetailsService = customUserDetailsService;
-    }
 
 
     public static final String[] AUTH_WHITELIST = {
@@ -72,25 +70,17 @@ public class SpringConfig {
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.csrf(AbstractHttpConfigurer::disable) // CSRF ni faqat REST API uchun o'chirish
-                .cors(cors -> {
-                    CorsConfigurationSource source = request -> {
-                        CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(Arrays.asList(
-                                "http://localhost:3000", // Frontend manzili
-                                "https://production-domain.com"
-                        ));
-                        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                        config.setAllowedHeaders(Arrays.asList("*"));
-                        config.setAllowCredentials(true);
-                        config.setExposedHeaders(Arrays.asList("Authorization"));
-                        config.setMaxAge(3600L);
-                        return config;
-                    };
-                    cors.configurationSource(source);
-                })
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.cors(httpSecurityCorsConfigurer -> {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.setAllowedOriginPatterns(Arrays.asList("*")); // Barcha manbalarga ruxsat
+            configuration.setAllowedMethods(Arrays.asList("*")); // Barcha metodlarga ruxsat
+            configuration.setAllowedHeaders(Arrays.asList("*")); // Barcha headerlarga ruxsat
 
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**", configuration);
+            httpSecurityCorsConfigurer.configurationSource(source);
+        });
         return http.build();
     }
 

@@ -10,11 +10,11 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1Q
 ###profile password update
 PUT http://localhost:8080/api/v1/profile/update/password
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiI1IiwiaWF0IjoxNzQ4NzEwMjYwLCJleHAiOjE3NDkwNTU4NjB9.g-6uEPpTQ4-_XRT7Q6ZdCjYt8JWRW5tTu0mgqvdpjX35N7wqWRDvwylCv0JMBzMyHxirtz8HlNewFf7hMCKfrg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiI1IiwiaWF0IjoxNzQ4Nzk3NTk5LCJleHAiOjE3NDkxNDMxOTl9.gVIJ6KoFNkolzveuHPs6WHNxuwZe98gD0V5hCA-ZikcEG9lMA7rXmIWN-AZ1Nr7iPN36LU5B8GZWIRu5hrsXAA
 
 {
-  "currentPassword": "1234",
-  "newPassword": "123"
+  "currentPassword": "123",
+  "newPassword": "1234"
 }
 
 ### username updated

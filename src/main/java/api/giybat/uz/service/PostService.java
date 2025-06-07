@@ -45,6 +45,7 @@ public class PostService {
         postEntity.setProfileId(SpringSecurityUtil.getProfileId());
         postRepository.save(postEntity);
         PostDTO postDto = mapper.toPostDto(postEntity);
+        postDto.setPhoto(dto.getPhoto());
         return ApiResponse.ok(postDto);
     }
 
@@ -67,7 +68,7 @@ public class PostService {
         return null;
     }
 
-    /*public List<PostDTO> adminFilter(PostAdminFilterDTO dto) {
+    public List<PostDTO> adminFilter(PostAdminFilterDTO dto) {
 
-    }*/
+    }
 }

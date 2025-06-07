@@ -39,6 +39,7 @@ public class PostController {
 
 
 
+
    /* @PostMapping("/filter")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<PostDTO>> filter(@Valid @RequestBody PostFilterDTO filterDTO){
