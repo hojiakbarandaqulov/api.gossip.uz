@@ -1,13 +1,11 @@
 package api.giybat.uz.controller;
 
 import api.giybat.uz.dto.ApiResponse;
-import api.giybat.uz.dto.post.PostAdminFilterDTO;
-import api.giybat.uz.dto.post.PostCreateDTO;
-import api.giybat.uz.dto.post.PostDTO;
-import api.giybat.uz.dto.post.PostFilterDTO;
+import api.giybat.uz.dto.post.*;
 import api.giybat.uz.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +23,7 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<PostDTO>> create(@RequestBody PostCreateDTO post) {
+    public ResponseEntity<ApiResponse<PostDTO>> create(@Valid @RequestBody PostCreateDTO post) {
         ApiResponse<PostDTO> response = postService.create(post);
         return ResponseEntity.ok(response);
     }
@@ -37,13 +35,24 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
-
-
-
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<PostResponseDto>> postById(@PathVariable String id) {
+        ApiResponse<PostResponseDto> postResponse = postService.postById(id);
+        return ResponseEntity.ok(postResponse);
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ApiResponse<PostResponseDto>> updatePost(@Valid @RequestBody PostCreateDTO dto,
+                                                           @PathVariable String id){
+        ApiResponse<PostResponseDto> update = postService.update(id, dto);
+        return ResponseEntity.ok(update);
+    }
    /* @PostMapping("/filter")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<List<PostDTO>> filter(@Valid @RequestBody PostFilterDTO filterDTO){
       ApiResponse<List<PostDTO>>response=  postService.filter(filterDTO);
+      return ResponseEntity.ok((List<PostDTO>) response);
     }*/
 
     /*@PostMapping("/filter")

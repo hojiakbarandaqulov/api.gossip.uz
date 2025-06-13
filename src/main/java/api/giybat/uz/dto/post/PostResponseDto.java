@@ -1,18 +1,18 @@
 package api.giybat.uz.dto.post;
 
-import api.giybat.uz.dto.attach.AttachCreateDTO;
-import jakarta.validation.constraints.NotNull;
+import api.giybat.uz.dto.attach.AttachDTO;
+import api.giybat.uz.entity.AttachEntity;
 import lombok.Data;
-
+import lombok.Getter;
+import lombok.Setter;
 import java.time.LocalDateTime;
 
-@Data
-public class PostDTO {
+@Getter
+@Setter
+public class PostResponseDto {
     private String id;
     private String title;
     private String content;
-    @NotNull(message = "photo required")
-    private AttachCreateDTO photo;
+    private String photo;
     private LocalDateTime createdDate;
-
 }

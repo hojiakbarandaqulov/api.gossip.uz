@@ -4,6 +4,7 @@ import api.giybat.uz.dto.attach.AttachCreateDTO;
 import api.giybat.uz.dto.attach.AttachDTO;
 import api.giybat.uz.entity.AttachEntity;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -16,6 +17,6 @@ public class PostCreateDTO {
     @NotBlank(message = "Content required")
     private String content;
 
-    @NotBlank(message = "Photo required")
-    private AttachDTO photo;
+    @NotNull(message = "Photo required")
+    private AttachCreateDTO photo;
 }

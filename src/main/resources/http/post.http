@@ -15,4 +15,19 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1Q
 GET http://localhost:8080/api/v1/post/profile?page1&size=5
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiI1IiwiaWF0IjoxNzQ4ODc4NTI0LCJleHAiOjE3NDkyMjQxMjR9.54vojSlRvKaJkbNkxXw07lZxmsME-sovQddeKZgCa63lbUFyMNLcDLaTcboSpu9krLcm70r_nOTCpmO-E5BcpQ
 
+###
+PUT http://localhost:8080/api/v1/post/update/7772340d-a375-4307-b257-d3ad0d3a667f
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiI1IiwiaWF0IjoxNzQ5NjA0NzYyLCJleHAiOjE3NDk5NTAzNjJ9._X4Bx9DsU8NBKwbGJB9VoKvE7uKW5TxJ6_paz2RuJ9y0sb3flLn3QWrsENM5zH3S9OlcWpIx8F6TdcaEwgipSw
 
+{
+  "title": "pishaklar",
+  "content": "pishaklar bu xayvon bolub ular eshshaklardan farq qiladi. Ularning yemishi bu sichqonlar xisoblanadi.",
+  "photo": {
+    "id": "e2ed520e-3480-4a8f-8598-14e4d13fa014.png"
+  }
+}
+
+### Post By Id
+GET http://localhost:8080/api/v1/post/8c981ad6-d252-48c2-add5-0140171523b5
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiI1IiwiaWF0IjoxNzQ5NTc2NDYyLCJleHAiOjE3NDk5MjIwNjJ9.oaaobkUVg1Wof2o-40n_i2JIIKWDe1FfLpKzU5YTgnhbSsvI1zTfGZiKCVGN6HAWfpEYdApBaXWWhBrQWzHJ0A
