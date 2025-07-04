@@ -21,8 +21,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJob2ppYWtiYXJhbmRhcXVsb3Y1QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiI1IiwiaWF0IjoxNzQ5NjA0NzYyLCJleHAiOjE3NDk5NTAzNjJ9._X4Bx9DsU8NBKwbGJB9VoKvE7uKW5TxJ6_paz2RuJ9y0sb3flLn3QWrsENM5zH3S9OlcWpIx8F6TdcaEwgipSw
 
 {
-  "title": "pishaklar",
-  "content": "pishaklar bu xayvon bolub ular eshshaklardan farq qiladi. Ularning yemishi bu sichqonlar xisoblanadi.",
+  "title": "mushuklar",
+  "content": "mushuklar bu xayvon bolub ular eshshaklardan farq qiladi. Ularning yemishi bu sichqonlar xisoblanadi.",
   "photo": {
     "id": "e2ed520e-3480-4a8f-8598-14e4d13fa014.png"
   }

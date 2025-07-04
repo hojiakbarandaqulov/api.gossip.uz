@@ -1,6 +1,5 @@
 package api.giybat.uz.config;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +18,7 @@ public class MigrationConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url(dataSourceUrl);
         dataSourceBuilder.username(dataSourceUsername);
         dataSourceBuilder.password(dataSourcePassword);
